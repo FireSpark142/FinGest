@@ -1,7 +1,7 @@
 import Redis from "ioredis";
 import Ccxws from "ccxws";
 import Util from "util";
-import {exchangeIDMap} from "./ccxtExchangeMap.js";
+import { exchangeIDMap } from "./maps/ccxtExMap";
 
 global.log = (...l) => console.log(...l);
 
@@ -52,7 +52,7 @@ const buildMap = async function (exchangeName) {
   exchange: 'Binance',
   base: 'STX',
   quote: 'BNB',
- 
+
  timestamp: 1647265351611,
   sequenceId: undefined,
  last: '0.00331900',

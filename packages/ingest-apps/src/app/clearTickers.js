@@ -1,11 +1,7 @@
-import Redis from "ioredis";
+import { redis } from "./utility/redis.module";
 
 global.log = (...l) => console.log(...l);
 
-const redis = new Redis({
-  port: 6379,
-  host: "127.0.0.1",
-});
 redis.on("error", (err) => console.log("Redis Client Error", err));
 
 const readStreams = async function () {
