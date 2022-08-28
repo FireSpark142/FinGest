@@ -1,0 +1,30 @@
+{
+  "name": "ingest",
+  "version": "1.0.0",
+  "description": "Tools to ingest websocket data",
+  "main": "varies",
+  "bin": {
+    "ingest": "bin/simmap.js"
+  },
+  "type": "module",
+  "scripts": {
+    "map": "node ingest/symbolmapper.js",
+    "trades": "node ingest/sendData.js",
+    "track": "node ingest/trackStreams.js",
+    "read": "node ingest/streamReader.js",
+    "request": "node ingest/requestStream.js",
+    "docker": ""
+  },
+  "author": "Wayne",
+  "license": "ISC",
+  "dependencies": {
+    "JSON": "^1.0.0",
+    "ccxt": "^1.92.82",
+    "ccxws": "^0.47.0",
+    "fast-json-stringify": "^5.1.0",
+    "ioredis": "^4.28.5",
+    "process": "^0.11.10",
+    "redis": "^4.0.4",
+    "simdjson": "^0.9.2"
+  }
+}
