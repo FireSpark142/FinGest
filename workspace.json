@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "builder": "packages/builder",
+    "clear-streams": "packages/clear-streams",
+    "ingest": "packages/ingest",
+    "ingest-apps": "packages/ingest-apps",
+    "read-streams": "packages/read-streams",
+    "redis": "packages/redis",
+    "track-streams": "packages/track-streams"
+  }
+}

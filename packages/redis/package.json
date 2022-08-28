@@ -1,0 +1,9 @@
+{
+  "name": "@finjest/redis",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "scripts": {
+    "run": "docker-compose -f src/docker-compose.yml up",
+    "test": "npm run /keytest/keytest.js"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/redis/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/redis",
+        "main": "packages/redis/src/index.ts",
+        "tsConfig": "packages/redis/tsconfig.lib.json",
+        "assets": ["packages/redis/*.md"],
+        "updateBuildableProjectDepsInPackageJson": true,
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      }
+    },
+    "up": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "docker-compose -f packages/redis/src/docker-compose.yml up -d"
+        ],
+        "parallel": false
+      }
+    },
+
+    "down": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "docker-compose -f packages/redis/src/docker-compose.yml down"
+        ],
+        "parallel": false
+      }
+    },
+
+    "demo": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "nx run redis:build",
+          "node dist/packages/redis/src/lib/redis.js"
+        ],
+        "parallel": false
+      }
+    },
+
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/redis/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/redis"],
+      "options": {
+        "jestConfig": "packages/redis/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

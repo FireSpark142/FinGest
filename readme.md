@@ -13,37 +13,41 @@ choice
 
 ## Currently only supports Binance && Binance Futures data
 
-***
+---
 
 how to use:
 
 ```
-cd /redis
-docker-compose up
+pnpm i
+nx run redis:up
+nx run builder:all
+nx ingest-apps:run
 ```
 
 wait til redis finishes loading
 
-```
-npm i pnpm
-pnpm i
-pnpm run map
-```
-
-wait til complete
+if you want to run the two stat microservices - in seperate terminals open:
 
 ```
-pnpm run trades
-```
-
-To see results locally in terminal:
-
-```
-pnpm run track
+nx run read-streams:run
 ```
 
 ```
-pnpm run read
+nx run track-streams:run
+```
+
+when finished with app run:
+
+```
+nx run redis:down
+```
+
+and close out of any open terminals
+
+to see the microservices in a local web browser as a graph run:
+
+```
+nx graph
 ```
 
 to connect to the redis server - use the redis client package of your language choice - and configure the server
@@ -60,22 +64,18 @@ Roadmap:
 Document Heavily
 Refactor with following architecture in order:
 
-* eslint
-* fastjsonstringify
-* simdjson - need to fork from luizperes && update his package if possble
-* typescript
-* break out modules
-* make schemas & objects for each data type
-* koaland
-* grpc
-* nx
-* dapr
-* object orientated
-* makefile
-* github actions
-* containerize for kubernetes && docker
-* add more exchanges
-
-    
-    
-    
+- eslint - done
+- fastjsonstringify - done
+- simdjson - in progress
+- typescript - in progress: status = not-strict
+- break out modules - 70% complete
+- make schemas & objects for each data type - not started
+- koaland - not started
+- grpc - not started
+- nx - done
+- dapr - not started
+- object orientated - not started
+- makefile - not started
+- github actions - not started
+- containerize for kubernetes && docker - not started
+- add more exchanges - not started
