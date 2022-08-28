@@ -1,26 +1,28 @@
-import Redis from "ioredis";
-import Ccxws from "ccxws";
-import Util from "util";
-import { exchangeIDMap } from "./maps/ccxtExMap";
+import * as Ccxws from 'ccxws';
+import { redisServer, redisStream } from '@finjest/ingest';
+import Redis from 'ioredis';
+import { exchangeIDMap } from '@finjest/ingest';
+import * as Util from 'util';
 
-global.log = (...l) => console.log(...l);
+const globalAny: any = global;
+const log = (globalAny.log = (...l: any) => console.log(...l));
 
 const redis = new Redis({
   port: 6379,
-  host: "127.0.0.1",
+  host: '127.0.0.1',
 });
 const streamToRedis = new Redis({
   port: 6379,
-  host: "127.0.0.1",
+  host: '127.0.0.1',
 });
 
-redis.on("error", (err) => log("Redis Client Error", err));
+redis.on('error', (err) => log('Redis Client Error', err));
 
 const exchangeMarketMap = new Map();
 
 const buildMap = async function (exchangeName) {
-  const exchangeKey = exchangeName + "Markets";
-  log("In buildMap ->", exchangeKey);
+  const exchangeKey = exchangeName + 'Markets';
+  log('In buildMap ->', exchangeKey);
   const exchangeMarkets = await redis.get(exchangeKey);
 
   if (exchangeMarkets == null) {
@@ -35,7 +37,7 @@ const buildMap = async function (exchangeName) {
   var mapObj;
   const marketsMap = new Map();
   for (let k = 0; k < eMarketsObj.ids.length; k++) {
-    //         marketData.push([idToUse, symbolToUse, baseToUse, quoteToUse]);
+    // marketData.push([idToUse, symbolToUse, baseToUse, quoteToUse]);
     mapObj = eMarketsObj.data[k];
     marketsMap.set(mapObj[0], mapObj);
     marketsMap.set(mapObj[1], mapObj);
@@ -72,11 +74,11 @@ const buildMap = async function (exchangeName) {
 const streamTicker = async function (ticker) {
   //log(Util.inspect(ticker, false, null, true));
   var streamKey =
-      ticker.exchange + ":" + ticker.base + ":" + ticker.quote + ":" + "ticker";
+    ticker.exchange + ':' + ticker.base + ':' + ticker.quote + ':' + 'ticker';
   //log(await redis.xlen(streamKey));
   //redis.set("lastStreamKey", streamKey);
 
-  streamToRedis.xadd("TestStream", "*", "key", streamKey);
+  streamToRedis.xadd('TestStream', '*', 'key', streamKey);
   /* */
   log(ticker);
   // prettier.ignore
@@ -149,41 +151,41 @@ Trade {
 */
 
 const streamTrade = async function (trade) {
-  //log(Util.inspect(ticker, false, null, true));
-  //log("streamTrade:", id);
+  // log(Util.inspect(ticker, false, null, true));
+  // log("streamTrade:", id);
   var streamKey =
-      trade.exchange + ":" + trade.base + trade.quote + ":" + "trade";
+    trade.exchange + ':' + trade.base + trade.quote + ':' + 'trade';
   //log(await redis.xlen(streamKey));
   //redis.set("lastStreamKey", streamKey);
   log(streamKey);
   //log(Util.inspect(trade, false, null, true));
-  streamToRedis.xadd("TestStream", "*", "key", streamKey);
+  streamToRedis.xadd('TestStream', '*', 'key', streamKey);
   /* */
   //log(trade);
   // prettier.ignore
   streamToRedis.xadd(
-      streamKey,
-      "*",
-      "E",
-      trade.unix,
-      //    "s",
-      //    trade.base + trade.quote,
-      "p",
-      parseFloat(trade.price).toString(),
-      "q",
-      parseFloat(trade.amount).toString()
+    streamKey,
+    '*',
+    'E',
+    trade.unix,
+    //    "s",
+    //    trade.base + trade.quote,
+    'p',
+    parseFloat(trade.price).toString(),
+    'q',
+    parseFloat(trade.amount).toString()
   );
 
   log(
-      "TRADE: ",
-      trade.id,
-      trade.base + trade.quote,
-      " @",
-      trade.unix,
-      " P:",
-      parseFloat(trade.price).toString(),
-      " Q:",
-      parseFloat(trade.amount).toString()
+    'TRADE: ',
+    trade.id,
+    trade.base + trade.quote,
+    ' @',
+    trade.unix,
+    ' P:',
+    parseFloat(trade.price).toString(),
+    ' Q:',
+    parseFloat(trade.amount).toString()
   );
   /* */
   //log(await redis.xlen(streamKey));
@@ -197,6 +199,8 @@ const webSocketMap = new Map();
 const subscriptions = new Map();
 
 class webSocketInfo {
+  private subLimit: number;
+  private wsClasses: any[];
   constructor() {
     this.subLimit = 25;
     this.wsClasses = [];
@@ -204,6 +208,8 @@ class webSocketInfo {
 }
 
 class webSocketItem {
+  wsClass: null;
+  private subs: any[];
   constructor() {
     this.wsClass = null;
     this.subs = [];
@@ -211,10 +217,10 @@ class webSocketItem {
 }
 
 const addSubscription = function (exchange, type, market) {
-  log("addSubscription ", exchange, type, market);
+  log('addSubscription ', exchange, type, market);
   var subKey = exchange + market.id + type;
   if (subscriptions.has(subKey)) {
-    log("ABORT ... already subscribed");
+    log('ABORT ... already subscribed');
     return;
   }
   subscriptions.set(subKey, 1);
@@ -222,7 +228,7 @@ const addSubscription = function (exchange, type, market) {
   var wsClass;
 
   if (webSocketMap.has(exchange) == false) {
-    log("Need to create wss for ", exchange);
+    log('Need to create wss for ', exchange);
 
     // need a lot to handle multiple clients
     webSocketMap.set(exchange, new webSocketInfo());
@@ -235,19 +241,19 @@ const addSubscription = function (exchange, type, market) {
     needWsClass = true;
   } else {
     if (
-        theWFI.wsClasses[theWFI.wsClasses.length - 1].subs.length >=
-        theWFI.subLimit
+      theWFI.wsClasses[theWFI.wsClasses.length - 1].subs.length >=
+      theWFI.subLimit
     ) {
       needWsClass = true;
     }
   }
 
   if (needWsClass) {
-    log("Need a New wsClass");
+    log('Need a New wsClass');
     if (!exchangeIDMap.has(exchange)) {
-      log("NO MAPPING for", exchange);
-      log("NO MAPPING for", exchange);
-      log("NO MAPPING for", exchange);
+      log('NO MAPPING for', exchange);
+      log('NO MAPPING for', exchange);
+      log('NO MAPPING for', exchange);
       return;
     }
     const wsClassName = exchangeIDMap.get(exchange);
@@ -260,9 +266,9 @@ const addSubscription = function (exchange, type, market) {
     wsClass = new exchangeClass();
     log(Util.inspect(wsClass, false, null, true));
 
-    wsClass.on("trade", (trade) =>
-        //console.log(Util.inspect(ticker, false, null, true))
-        streamTrade(trade)
+    wsClass.on('trade', (trade) =>
+      //console.log(Util.inspect(ticker, false, null, true))
+      streamTrade(trade)
     );
     // retain this websocket class
     const theWFItem = new webSocketItem();
@@ -276,63 +282,64 @@ const addSubscription = function (exchange, type, market) {
 };
 
 // -----------------------
-const startStreams = async function () {
-  var waitingStreams = await redis.llen("dataStreaming");
-  log("len ->", waitingStreams);
+export const startStreams = async function () {
+  var waitingStreams = await redis.llen('dataStreaming');
+  log('len ->', waitingStreams);
   while (waitingStreams > 0) {
     waitingStreams--;
-    var oldRequest = await redis.blpop("dataStreaming", 0);
-    log("old request", oldRequest);
+    var oldRequest = await redis.blpop('dataStreaming', 0);
+    log('old request', oldRequest);
     oldRequest = JSON.parse(oldRequest[1]);
     //log("old request", oldRequest);
-    await redis.rpush("dataRequest", JSON.stringify(oldRequest));
-    log("dataRequest llen", await redis.llen("dataRequest"));
+    await redis.rpush('dataRequest', JSON.stringify(oldRequest));
+    log('dataRequest llen', await redis.llen('dataRequest'));
   }
+  let looping = true;
 
   while (true) {
-    var request = await redis.blpop("dataRequest", 0);
+    var request = await redis.blpop('dataRequest', 0);
 
     log(request);
     request = JSON.parse(request[1]);
-    log(request.exchange);
-    await redis.rpush("dataStreaming", JSON.stringify(request));
-    log("------->>>>", await redis.llen("dataStreaming"));
+    log(request['exchange']);
+    await redis.rpush('dataStreaming', JSON.stringify(request));
+    log('------->>>>', await redis.llen('dataStreaming'));
 
-    var marketMap = exchangeMarketMap.get(request.exchange);
+    var marketMap = exchangeMarketMap.get(request['exchange']);
     if (marketMap == null) {
-      await buildMap(request.exchange);
-      marketMap = exchangeMarketMap.get(request.exchange);
+      await buildMap(request['exchange']);
+      marketMap = exchangeMarketMap.get(request['exchange']);
     }
 
     //log("---->", marketMap);
     if (marketMap != null) {
       var marketRef;
 
-      if ("id" in request) {
-        marketRef = request.id;
+      if ('id' in request) {
+        marketRef = request['id'];
       } else {
-        marketRef = request.symbol;
+        marketRef = request['symbol'];
       }
 
-      log("+++>", marketRef);
+      log('+++>', marketRef);
       if (marketMap.has(marketRef)) {
         const mVals = marketMap.get(marketRef);
         //log(Util.inspect(mVals, false, null, true));
-        log("id", request.id, "mVals:", mVals);
+        log('id', request['id'], 'mVals:', mVals);
         const market = {
           id: mVals[0],
           symbol: mVals[1],
           base: mVals[2],
           quote: mVals[3],
         };
-        log(">>>>>> Result <<<<<<");
+        log('>>>>>> Result <<<<<<');
         log(market);
-        addSubscription(request.exchange, request.type, market);
+        addSubscription(request['exchange'], request['type'], market);
       } else {
-        log("UNKNOWN MARKET: ", marketRef);
+        log('UNKNOWN MARKET: ', marketRef);
       }
     }
   }
 };
 
-startStreams().then(log("streaming starting"));
+startStreams().then(() => console.log('streaming starting'));

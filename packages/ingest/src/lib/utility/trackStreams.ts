@@ -1,19 +1,17 @@
-import Redis from "ioredis";
-import JSON from "JSON";
+import Redis from 'ioredis';
+import JSON from 'JSON';
 
-global.log = (...l) => console.log(...l);
+const globalAny: any = global;
+const log = (globalAny.log = (...l: any) => console.log(...l));
+const redis = new Redis();
 
-const redis = new Redis({
-  port: 6379,
-  host: "127.0.0.1",
-});
-redis.on("error", (err) => console.log("Redis Client Error", err));
+redis.on('error', (err) => console.log('Redis Client Error', err));
 
 const exchangeMarketMap = new Map();
 
 const buildMap = async function (exchangeName) {
-  const exchangeKey = exchangeName + "Markets";
-  log("In buildMap ->", exchangeKey);
+  const exchangeKey = exchangeName + 'Markets';
+  log('In buildMap ->', exchangeKey);
   const exchangeMarkets = await redis.get(exchangeKey);
 
   if (exchangeMarkets == null) {
@@ -35,8 +33,8 @@ const buildMap = async function (exchangeName) {
   exchangeMarketMap.set(exchangeName, marketsMap);
 };
 
-const readStreams = async function () {
-  var keyList = await redis.keys("*trade");
+export const trackStreams = async function () {
+  var keyList = await redis.keys('*trade');
   // log(keyList);
 
   var totalMemUsed = 0;
@@ -44,21 +42,19 @@ const readStreams = async function () {
   var totalTicks = 0;
   var ticks = 0;
   for (let k = 0; k < keyList.length; k++) {
-    memUse = await redis.memory("USAGE", keyList[k]);
+    memUse = await redis.memory('USAGE', keyList[k]);
     ticks = await redis.xlen(keyList[k]);
-    log(k, ":> ", keyList[k], ":", ticks, " >> ", memUse, "bytes");
+    log(k, ':> ', keyList[k], ':', ticks, ' >> ', memUse, 'bytes');
     totalMemUsed += memUse;
     totalTicks += ticks;
   }
   log(
-      totalTicks,
-      "ticks in",
-      totalMemUsed / (1024 * 1024),
-      "MB, ",
-      totalMemUsed / totalTicks,
-      "byte/tick"
+    totalTicks,
+    'ticks in',
+    totalMemUsed / (1024 * 1024),
+    'MB, ',
+    totalMemUsed / totalTicks,
+    'byte/tick'
   );
   redis.disconnect();
 };
-
-readStreams();
