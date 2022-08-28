@@ -31,7 +31,8 @@ To see results:
 Roadmap:
 Document Heavily
 Refactor with following architecture in order:
-
+* eslint
+* prettier
 * fastjsonstringify
 * simdjson - need to fork from luizperes && update his package if possble
 * typescript
