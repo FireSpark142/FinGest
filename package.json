@@ -9,11 +9,9 @@
   "type": "module",
   "scripts": {
     "map": "node ingest/symbolmapper.js",
-    "trades": "node ingest/sendData.js",
+    "trades": "node ingest/sendTrades.js",
     "track": "node ingest/trackStreams.js",
-    "read": "node ingest/streamReader.js",
-    "request": "node ingest/requestStream.js",
-    "docker": ""
+    "read": "node ingest/streamReader.js"
   },
   "author": "Wayne",
   "license": "ISC",

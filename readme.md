@@ -18,25 +18,59 @@ Use pnpm a module if you need to install instead of npm
 symbolmapper.js Produces key/value pairs to map the exchange id to ccxt symbol.
 
 The ccxt symbol is necessary for rest APIs.
-To see results use redis. In redis clone:
 
+how to use:
+
+```
+cd /redis
 docker-compose up
-redis-servers
+```
 
-In this clone: node symbolmapper.js
-To see results:
+wait til redis finishes loading
+
+```
+npm i pnpm
+pnpm i
+pnpm run map
+```
+
+wait til complete
+
+```
+pnpm run trades
+```
+
+To see results locally in terminal:
+
+```
+pnpm run track
+```
+
+```
+pnpm run read
+```
+
+to connect to the redis server - use the redis client package of your language choice - and configure the server
+settings to:
+
+```
+port: 6379
+host: 127.0.0.1
+```
 
 - to do
 
 Roadmap:
 Document Heavily
 Refactor with following architecture in order:
+
 * eslint
 * prettier
 * fastjsonstringify
 * simdjson - need to fork from luizperes && update his package if possble
 * typescript
-* koa
+* koaland
+* grpc
 * nx
 * dapr
 * object orientated
