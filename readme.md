@@ -11,6 +11,8 @@ This is a major work in progress right now -
 ///The goal is a containerized application you can run on any system to consume the stream via the language of your
 choice
 
+##Currently only supports Binance && Binance Futures data
+
 ***
 
 how to use:
@@ -65,7 +67,6 @@ Refactor with following architecture in order:
 * typescript
 * break out modules
 * make schemas & objects for each data type
-* add more exchanges
 * koaland
 * grpc
 * nx
@@ -74,6 +75,8 @@ Refactor with following architecture in order:
 * makefile
 * github actions
 * containerize for kubernetes && docker
+* add more exchanges
+
     
     
     
