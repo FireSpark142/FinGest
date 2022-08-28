@@ -11,7 +11,7 @@ This is a major work in progress right now -
 ///The goal is a containerized application you can run on any system to consume the stream via the language of your
 choice
 
-##Currently only supports Binance && Binance Futures data
+## Currently only supports Binance && Binance Futures data
 
 ***
 
