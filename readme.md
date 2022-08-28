@@ -63,6 +63,9 @@ Refactor with following architecture in order:
 * fastjsonstringify
 * simdjson - need to fork from luizperes && update his package if possble
 * typescript
+* break out modules
+* make schemas & objects for each data type
+* add more exchanges
 * koaland
 * grpc
 * nx
