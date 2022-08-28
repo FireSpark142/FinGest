@@ -1,6 +1,6 @@
 This is a major work in progress right now -
 
-//Please be aware of this - there's nothing completely functional right now
+//Please be aware of this - this is major work in progress
 
 ///Backstory is a dear friend of mine who shall be referenced as only Wayne, started this project.
 
