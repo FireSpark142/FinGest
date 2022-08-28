@@ -13,12 +13,6 @@ choice
 
 ***
 
-Use pnpm a module if you need to install instead of npm
-
-symbolmapper.js Produces key/value pairs to map the exchange id to ccxt symbol.
-
-The ccxt symbol is necessary for rest APIs.
-
 how to use:
 
 ```
