@@ -4,8 +4,10 @@
   "projects": {
     "builder": "packages/builder",
     "clear-streams": "packages/clear-streams",
+    "got-revamp": "packages/got-revamp",
     "ingest": "packages/ingest",
     "ingest-apps": "packages/ingest-apps",
+    "koa-revamp": "packages/koa-revamp",
     "read-streams": "packages/read-streams",
     "redis": "packages/redis",
     "track-streams": "packages/track-streams"

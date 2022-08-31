@@ -18,36 +18,32 @@ choice
 how to use:
 
 ```
-pnpm i
-nx run redis:up
-nx run builder:all
-nx ingest-apps:run
+cd /redis
+docker-compose up
 ```
 
 wait til redis finishes loading
 
-if you want to run the two stat microservices - in seperate terminals open:
-
 ```
-nx run read-streams:run
-```
-
-```
-nx run track-streams:run
+npm i pnpm
+pnpm i
+pnpm run map
 ```
 
-when finished with app run:
+wait til complete
 
 ```
-nx run redis:down
+pnpm run trades
 ```
 
-and close out of any open terminals
-
-to see the microservices in a local web browser as a graph run:
+To see results locally in terminal:
 
 ```
-nx graph
+pnpm run track
+```
+
+```
+pnpm run read
 ```
 
 to connect to the redis server - use the redis client package of your language choice - and configure the server
@@ -64,18 +60,24 @@ Roadmap:
 Document Heavily
 Refactor with following architecture in order:
 
-- eslint - done
-- fastjsonstringify - done
-- simdjson - in progress
-- typescript - in progress: status = not-strict
-- break out modules - 70% complete
-- make schemas & objects for each data type - not started
-- koaland - not started
-- grpc - not started
-- nx - done
-- dapr - not started
-- object orientated - not started
-- makefile - not started
-- github actions - not started
-- containerize for kubernetes && docker - not started
-- add more exchanges - not started
+- slow-json-stringify everything
+- simdjson everything
+  - pull the package and make clone, revamp it - use latest simdjson spec
+- update got with undici
+- rewrite and update packages as needed in koa-revamp
+- rewrite and update packages as needed in koa-revamp
+- decide if u want koaland or not (probably not)
+- rewrite and update packages as needed in socketcluster-server-revamp
+- rewrite and update packages as needed in socketcluster-client-revamp
+- rewrite and update packages as needed in socketcluster-revamp
+  - migrate from express to koa
+- rewrite ccwxs - pretty much everything - to use socketcluster-revamp
+- typescript everything
+- release revamps of every sub app as separate projects
+- drink beer cause ur already done with part 1
+- break out modules
+- make schemas & objects for each data type
+- dapr ?
+- revisit redis vs zudu vs custom inhouse data buffering thing
+- makefile
+- github actions
