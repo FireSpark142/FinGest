@@ -1,0 +1,45 @@
+{
+  "name": "koaland",
+  "version": "1.2.2",
+  "description": "A progressive, minimalist framework for building microservices on top of Koa & TypeScript",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc --declaration",
+    "test": "jest --coverage",
+    "test:coverage": "jest --collect-coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cooperhsiung/koaland.git"
+  },
+  "keywords": [
+    "koa",
+    "suit",
+    "microservice",
+    "http",
+    "rpc"
+  ],
+  "author": "Cooper Hsiung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cooperhsiung/koaland/issues"
+  },
+  "homepage": "https://github.com/cooperhsiung/koaland#readme",
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "koa-grpc": "^1.0.4",
+    "koa-thrift": "^1.0.8"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.22",
+    "@types/koa-bodyparser": "^4.3.7",
+    "@types/koa__router": "^8.0.11",
+    "jest": "^26.6.3",
+    "reflect-metadata": "^0.1.13",
+    "ts-jest": "^26.5.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  }
+}

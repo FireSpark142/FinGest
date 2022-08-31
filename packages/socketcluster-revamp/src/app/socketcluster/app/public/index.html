@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SocketCluster</title>
+  <link href="/favicon.ico" rel="icon" type="image/png">
+  <script src="/socketcluster-client.js" type="text/javascript"></script>
+  <style>
+    @font-face {
+      font-family: 'Roboto';
+      src: URL('Roboto-Light.ttf') format('truetype');
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      color: #666666;
+      display: table;
+      font-weight: 100;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a {
+      font-weight: 300;
+      color: #72B963;
+    }
+
+    .container {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .content {
+      text-align: center;
+      display: inline-block;
+    }
+
+    .logo {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-family: 'Roboto', Helvetica, sans-serif;
+      font-size: 96px;
+      margin-bottom: 20px;
+    }
+
+    .text {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .small {
+      font-size: 18px;
+    }
+
+    .github-button {
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="content">
+    <img alt="Logo" class="logo" src="img/logo.png" />
+    <div class="title">
+      SocketCluster
+    </div>
+    <div class="small">
+      <a href="https://socketcluster.io/docs/guides/">Guides</a> <strong>&middot;</strong>
+      <a href="https://socketcluster.io/docs/api/">API Docs</a>
+    </div>
+    <p class="github-button">
+      <iframe frameborder="0" height="30px" scrolling="0"
+              src="https://ghbtns.com/github-btn.html?user=socketcluster&repo=socketcluster&type=star&count=true&size=large"
+              width="160px"></iframe>
+    </p>
+  </div>
+</div>
+<script type="text/javascript">
+  // Initiate the connection to the server
+  let socket = socketClusterClient.create();
+
+  (async () => {
+    for await (let { error } of socket.listener("error")) {
+      console.error(error);
+    }
+  })();
+
+  (async () => {
+    for await (let event of socket.listener("connect")) {
+      console.log("Socket is connected");
+    }
+  })();
+</script>
+</body>
+</html>
