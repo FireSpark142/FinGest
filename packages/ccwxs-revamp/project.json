@@ -1,0 +1,67 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ccwxs-revamp/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/ccwxs-revamp",
+        "main": "packages/ccwxs-revamp/src/main.ts",
+        "tsConfig": "packages/ccwxs-revamp/tsconfig.app.json",
+        "assets": [
+          "packages/ccwxs-revamp/src/assets"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "packages/ccwxs-revamp/src/environments/environment.ts",
+              "with": "packages/ccwxs-revamp/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "ccwxs-revamp:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "ccwxs-revamp:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/ccwxs-revamp/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/packages/ccwxs-revamp"
+      ],
+      "options": {
+        "jestConfig": "packages/ccwxs-revamp/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

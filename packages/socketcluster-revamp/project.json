@@ -1,0 +1,67 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/socketcluster-revamp/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/socketcluster-revamp",
+        "main": "packages/socketcluster-revamp/src/main.ts",
+        "tsConfig": "packages/socketcluster-revamp/tsconfig.app.json",
+        "assets": [
+          "packages/socketcluster-revamp/src/assets"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "packages/socketcluster-revamp/src/environments/environment.ts",
+              "with": "packages/socketcluster-revamp/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "socketcluster-revamp:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "socketcluster-revamp:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/socketcluster-revamp/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/packages/socketcluster-revamp"
+      ],
+      "options": {
+        "jestConfig": "packages/socketcluster-revamp/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
