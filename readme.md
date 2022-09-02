@@ -18,32 +18,36 @@ choice
 how to use:
 
 ```
-cd /redis
-docker-compose up
+pnpm i
+nx run redis:up
+nx run builder:all
+nx ingest-apps:run
 ```
 
 wait til redis finishes loading
 
-```
-npm i pnpm
-pnpm i
-pnpm run map
-```
-
-wait til complete
+if you want to run the two stat microservices - in seperate terminals open:
 
 ```
-pnpm run trades
-```
-
-To see results locally in terminal:
-
-```
-pnpm run track
+nx run read-streams:run
 ```
 
 ```
-pnpm run read
+nx run track-streams:run
+```
+
+when finished with app run:
+
+```
+nx run redis:down
+```
+
+and close out of any open terminals
+
+to see the microservices in a local web browser as a graph run:
+
+```
+nx graph
 ```
 
 to connect to the redis server - use the redis client package of your language choice - and configure the server
