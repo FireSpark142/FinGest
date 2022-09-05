@@ -292,7 +292,7 @@ export const startStreams = async function () {
     log('old request', oldRequest);
     oldRequest = JSON.parse(oldRequest[1]);
     //log("old request", oldRequest);
-    await redis.rpush('dataRequest', TSON.stringify<T>(oldRequest));
+    await redis.rpush('dataRequest', TSON.stringify(oldRequest));
     log('dataRequest llen', await redis.llen('dataRequest'));
   }
   let looping = true;
@@ -303,7 +303,7 @@ export const startStreams = async function () {
     log(request);
     request = JSON.parse(request[1]);
     log(request['exchange']);
-    await redis.rpush('dataStreaming', TSON.stringify<T>(request));
+    await redis.rpush('dataStreaming', TSON.stringify(request));
     log('------->>>>', await redis.llen('dataStreaming'));
 
     var marketMap = exchangeMarketMap.get(request['exchange']);

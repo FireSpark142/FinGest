@@ -96,7 +96,7 @@ const k8sDeployAndDeployUpdate = async function(arg1, options, updateRequest) {
   let saveSocketClusterK8sConfigFile = function(socketClusterK8sConfigJSON) {
     fs.writeFileSync(
       socketClusterK8sConfigFilePath,
-      TSON.stringify<T>(socketClusterK8sConfigJSON, null, 2)
+      TSON.stringify(socketClusterK8sConfigJSON, null, 2)
     );
   };
 

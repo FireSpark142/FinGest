@@ -49,7 +49,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendSubTicker(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "subscribe",
         params: {
           channel: `lightning_ticker_${remote_id}`
@@ -60,7 +60,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "unsubscribe",
         params: {
           channel: `lightning_ticker_${remote_id}`
@@ -71,7 +71,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "subscribe",
         params: {
           channel: `lightning_executions_${remote_id}`
@@ -85,7 +85,7 @@ export class BitflyerClient extends BasicClient {
     if (this.requestSnapshot)
       this._requestLevel2Snapshot(this._level2UpdateSubs.get(remote_id));
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "subscribe",
         params: {
           channel: `lightning_board_${remote_id}`
@@ -96,7 +96,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "unsubscribe",
         params: {
           channel: `lightning_executions_${remote_id}`
@@ -107,7 +107,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "unsubscribe",
         params: {
           channel: `lightning_board_${remote_id}`

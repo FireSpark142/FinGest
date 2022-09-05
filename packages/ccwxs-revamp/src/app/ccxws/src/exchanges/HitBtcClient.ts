@@ -55,7 +55,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendSubTicker(remote_id: string) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "subscribeTicker",
         params: {
           symbol: remote_id
@@ -67,7 +67,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id: string) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "unsubscribeTicker",
         params: {
           symbol: remote_id
@@ -78,7 +78,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendSubTrades(remote_id: string) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "subscribeTrades",
         params: {
           symbol: remote_id
@@ -90,7 +90,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id: string) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "unsubscribeTrades",
         params: {
           symbol: remote_id
@@ -101,7 +101,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendSubCandles(remote_id: string) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "subscribeCandles",
         params: {
           symbol: remote_id,
@@ -114,7 +114,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendUnsubCandles(remote_id: string) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "unsubscribeCandles",
         params: {
           symbol: remote_id,
@@ -126,7 +126,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id: string) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "subscribeOrderbook",
         params: {
           symbol: remote_id
@@ -138,7 +138,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id: string) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "unsubscribeOrderbook",
         params: {
           symbol: remote_id

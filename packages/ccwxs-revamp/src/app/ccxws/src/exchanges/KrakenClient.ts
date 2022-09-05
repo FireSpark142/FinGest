@@ -155,7 +155,7 @@ export class KrakenClient extends BasicClient {
       const wsSymbols = this._wsSymbolsFromSubMap(subMap);
       if (!this._wss) return;
       this._wss.send(
-        TSON.stringify<T>({
+        TSON.stringify({
           event: subscribe ? "subscribe" : "unsubscribe",
           pair: wsSymbols,
           subscription

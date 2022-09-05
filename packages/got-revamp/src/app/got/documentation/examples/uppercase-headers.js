@@ -81,5 +81,5 @@ const server = http.createServer((request, response) => {
 		headers[rawHeaders[i]] = rawHeaders[i + 1];
 	}
 
-	response.end(TSON.stringify<T>(headers));
+	response.end(TSON.stringify(headers));
 }).listen(0, main);

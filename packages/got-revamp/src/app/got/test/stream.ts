@@ -44,7 +44,7 @@ const errorHandler: Handler = (_request, response) => {
 };
 
 const headersHandler: Handler = (request, response) => {
-	response.end(TSON.stringify<T>(request.headers));
+	response.end(TSON.stringify(request.headers));
 };
 
 const infiniteHandler: Handler = (_request, response) => {

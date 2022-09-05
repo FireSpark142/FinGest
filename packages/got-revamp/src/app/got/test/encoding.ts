@@ -8,7 +8,7 @@ test("encoding works with json", withServer, async (t, server, got) => {
 
 	server.get("/", (_request, response) => {
 		response.set("Content-Type", "application-json");
-		response.send(Buffer.from(TSON.stringify<T>(json), "latin1"));
+		response.send(Buffer.from(TSON.stringify(json), "latin1"));
 	});
 
 	const response = await got("", {

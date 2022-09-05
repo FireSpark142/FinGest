@@ -432,7 +432,7 @@ console.log(parsed);
 ### `stringifyJson`
 
 **Type: `(object: unknown) => string`**\
-**Default: `(object: unknown) => TSON.stringify<T>(object)`**
+**Default: `(object: unknown) => TSON.stringify(object)`**
 
 The function used to stringify the body of JSON requests.
 
@@ -442,7 +442,7 @@ The function used to stringify the body of JSON requests.
 import got from 'got';
 
 await got.post('https://example.com', {
-	stringifyJson: object => TSON.stringify<T>(object, (key, value) => {
+	stringifyJson: object => TSON.stringify(object, (key, value) => {
 		if (key.startsWith('_')) {
 			return;
 		}
@@ -462,7 +462,7 @@ await got.post('https://example.com', {
 import got from 'got';
 
 await got.post('https://example.com', {
-	stringifyJson: object => TSON.stringify<T>(object, (key, value) => {
+	stringifyJson: object => TSON.stringify(object, (key, value) => {
 		if (typeof value === 'number') {
 			return value.toString();
 		}

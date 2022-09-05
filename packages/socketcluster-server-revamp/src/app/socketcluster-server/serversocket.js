@@ -977,7 +977,7 @@ AGServerSocket.prototype._destroy = function(code, reason) {
         let reasonString;
         if (typeof reason === "object") {
           try {
-            reasonString = TSON.stringify<T>(reason);
+            reasonString = TSON.stringify(reason);
           } catch (error) {
             reasonString = reason.toString();
           }

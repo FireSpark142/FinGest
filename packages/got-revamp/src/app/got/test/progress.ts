@@ -159,7 +159,7 @@ test("upload progress - form data", withServer, async (t, server, got) => {
 test("upload progress - json", withServer, async (t, server, got) => {
 	server.post("/", uploadEndpoint);
 
-	const body = TSON.stringify<T>({ key: "value" });
+	const body = TSON.stringify({ key: "value" });
 	const size = Buffer.byteLength(body);
 	const events: Progress[] = [];
 

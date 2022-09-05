@@ -56,7 +56,7 @@ export class BithumbClient extends BasicClient {
   protected __sendSubTicker() {
     const symbols = Array.from(this._tickerSubs.keys());
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "ticker",
         symbols,
         tickTypes: ["24H"]
@@ -71,7 +71,7 @@ export class BithumbClient extends BasicClient {
   protected __sendSubTrades() {
     const symbols = Array.from(this._tradeSubs.keys());
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "transaction",
         symbols
       })
@@ -88,7 +88,7 @@ export class BithumbClient extends BasicClient {
       this._requestLevel2Snapshot(this._level2UpdateSubs.get(symbol));
     }
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "orderbookdepth",
         symbols
       })

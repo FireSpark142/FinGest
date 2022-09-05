@@ -40,7 +40,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendSubTicker(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "ticker.subscribe",
         params: [remote_id],
         id: ++this.id
@@ -50,7 +50,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "ticker.unsubscribe",
         params: [remote_id],
         id: ++this.id
@@ -60,7 +60,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "trades.subscribe",
         params: [remote_id],
         id: ++this.id
@@ -70,7 +70,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "trades.unsubscribe",
         params: [remote_id],
         id: ++this.id
@@ -80,7 +80,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "depth.subscribe",
         params: [remote_id],
         id: ++this.id
@@ -90,7 +90,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         method: "depth.unsubscribe",
         params: [remote_id],
         id: ++this.id

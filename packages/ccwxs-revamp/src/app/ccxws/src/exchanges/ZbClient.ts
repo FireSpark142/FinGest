@@ -35,7 +35,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "addChannel",
         channel: `${wss_remote_id}_ticker`
       })
@@ -46,7 +46,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "removeChannel",
         channel: `${wss_remote_id}_ticker`
       })
@@ -57,7 +57,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "addChannel",
         channel: `${wss_remote_id}_trades`
       })
@@ -68,7 +68,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "removeChannel",
         channel: `${wss_remote_id}_trades`
       })
@@ -79,7 +79,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "addChannel",
         channel: `${wss_remote_id}_depth`
       })
@@ -90,7 +90,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "removeChannel",
         channel: `${wss_remote_id}_depth`
       })

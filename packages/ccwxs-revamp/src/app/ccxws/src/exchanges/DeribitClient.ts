@@ -47,7 +47,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendSubTicker(remote_id) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         jsonrpc: "2.0",
         method: "public/subscribe",
         params: {
@@ -60,7 +60,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         jsonrpc: "2.0",
         method: "public/unsubscribe",
         params: {
@@ -73,7 +73,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         jsonrpc: "2.0",
         method: "public/subscribe",
         params: {
@@ -86,7 +86,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         jsonrpc: "2.0",
         method: "public/unsubscribe",
         params: {
@@ -99,7 +99,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendSubCandles(remote_id) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         jsonrpc: "2.0",
         method: "public/subscribe",
         params: {
@@ -112,7 +112,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendUnsubCandles(remote_id) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         jsonrpc: "2.0",
         method: "public/unsubscribe",
         params: {
@@ -125,7 +125,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id) {
     this._send(
-      TSON.stringify<T>({
+      TSON.stringify({
         jsonrpc: "2.0",
         method: "public/subscribe",
         params: {
@@ -138,7 +138,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         jsonrpc: "2.0",
         method: "public/unsubscribe",
         params: {

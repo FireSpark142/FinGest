@@ -357,7 +357,7 @@ test("JSON request custom stringifier", withServer, async (t, server, got) => {
 	server.post("/", echoBody);
 
 	const payload = { a: "b" };
-	const customStringify = (object: any) => TSON.stringify<T>({ ...object, c: "d" });
+	const customStringify = (object: any) => TSON.stringify({ ...object, c: "d" });
 
 	t.deepEqual((await got.post({
 		stringifyJson: customStringify,

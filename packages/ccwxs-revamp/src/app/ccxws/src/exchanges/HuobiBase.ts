@@ -34,13 +34,13 @@ export class HuobiBase extends BasicClient {
 
   protected _sendPong(ts: number) {
     if (this._wss) {
-      this._wss.send(TSON.stringify<T>({ pong: ts }));
+      this._wss.send(TSON.stringify({ pong: ts }));
     }
   }
 
   protected _sendSubTicker(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         sub: `market.${remote_id}.detail`,
         id: remote_id
       })
@@ -49,7 +49,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendUnsubTicker(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         unsub: `market.${remote_id}.detail`,
         id: remote_id
       })
@@ -58,7 +58,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendSubTrades(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         sub: `market.${remote_id}.trade.detail`,
         id: remote_id
       })
@@ -67,7 +67,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendUnsubTrades(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         unsub: `market.${remote_id}.trade.detail`,
         id: remote_id
       })
@@ -76,7 +76,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendSubCandles(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         sub: `market.${remote_id}.kline.${candlePeriod(this.candlePeriod)}`,
         id: remote_id
       })
@@ -85,7 +85,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendUnsubCandles(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         unsub: `market.${remote_id}.kline.${candlePeriod(this.candlePeriod)}`,
         id: remote_id
       })
@@ -94,7 +94,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         sub: `market.${remote_id}.depth.size_150.high_freq`,
         data_type: "incremental",
         id: "depth_update_" + remote_id
@@ -104,7 +104,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         unsub: `market.${remote_id}.depth.size_150.high_freq`,
         data_type: "incremental",
         id: "depth_update_" + remote_id
@@ -114,7 +114,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendSubLevel2Snapshots(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         sub: `market.${remote_id}.depth.step0`,
         id: "depth_" + remote_id
       })
@@ -123,7 +123,7 @@ export class HuobiBase extends BasicClient {
 
   protected _sendUnsubLevel2Snapshots(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         unsub: `market.${remote_id}.depth.step0`
       })
     );

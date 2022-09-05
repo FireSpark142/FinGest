@@ -37,7 +37,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendSubTicker(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "subscribe",
         product_ids: [remote_id],
         channels: ["ticker"]
@@ -47,7 +47,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "unsubscribe",
         product_ids: [remote_id],
         channels: ["ticker"]
@@ -57,7 +57,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "subscribe",
         product_ids: [remote_id],
         channels: ["matches"]
@@ -67,7 +67,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "unsubscribe",
         product_ids: [remote_id],
         channels: ["matches"]
@@ -77,7 +77,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "subscribe",
         product_ids: [remote_id],
         channels: ["level2"]
@@ -87,7 +87,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "unsubscribe",
         product_ids: [remote_id],
         channels: ["level2"]
@@ -97,7 +97,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendSubLevel3Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "subscribe",
         product_ids: [remote_id],
         channels: ["full"]
@@ -107,7 +107,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendUnsubLevel3Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         type: "unsubscribe",
         product_ids: [remote_id],
         channels: ["full"]

@@ -96,7 +96,7 @@ describe("ctx.flushHeaders()", () => {
       ctx.flushHeaders();
 
       setTimeout(() => {
-        stream.end(TSON.stringify<T>({ message: "hello!" }));
+        stream.end(TSON.stringify({ message: "hello!" }));
       }, 10000);
     });
 

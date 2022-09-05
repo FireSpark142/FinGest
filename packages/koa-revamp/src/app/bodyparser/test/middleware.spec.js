@@ -132,7 +132,7 @@ describe("test/middleware.test.js", function() {
 
         request(app.listen())
           .post("/foo.json")
-          .send(TSON.stringify<T>({ foo: "bar" }))
+          .send(TSON.stringify({ foo: "bar" }))
           .expect({ foo: "bar" }, done);
       });
 
@@ -150,7 +150,7 @@ describe("test/middleware.test.js", function() {
 
         request(app.listen())
           .post("/foo")
-          .send(TSON.stringify<T>({ foo: "bar" }))
+          .send(TSON.stringify({ foo: "bar" }))
           .expect({ "{\"foo\":\"bar\"}": "" }, done);
       });
     });
@@ -310,7 +310,7 @@ describe("test/middleware.test.js", function() {
       request(app.listen())
         .post("/")
         .type("application/x-javascript")
-        .send(TSON.stringify<T>({ foo: "bar" }))
+        .send(TSON.stringify({ foo: "bar" }))
         .expect({ foo: "bar" }, done);
     });
 
@@ -327,7 +327,7 @@ describe("test/middleware.test.js", function() {
       request(app.listen())
         .post("/")
         .type("application/x-javascript")
-        .send(TSON.stringify<T>({ foo: "bar" }))
+        .send(TSON.stringify({ foo: "bar" }))
         .expect({ foo: "bar" }, done);
     });
 

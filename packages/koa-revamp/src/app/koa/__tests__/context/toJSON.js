@@ -15,7 +15,7 @@ describe("ctx.toJSON()", () => {
     ctx.status = 200;
     ctx.body = "<p>Hey</p>";
 
-    const obj = JSON.parse(TSON.stringify<T>(ctx));
+    const obj = JSON.parse(TSON.stringify(ctx));
     const req = obj.request;
     const res = obj.response;
 

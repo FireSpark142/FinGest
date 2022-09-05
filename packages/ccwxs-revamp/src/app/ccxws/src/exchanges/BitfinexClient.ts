@@ -133,12 +133,12 @@ export class BitfinexClient extends BasicClient {
     // 32768 adds a Timestamp in milliseconds to each received event
     // 131072 Enable checksum for every book iteration. Checks the top 25 entries for each side of book. Checksum is a signed int. more info https://docs.bitfinex.com/docs/ws-websocket-checksum. it's sent in its own
     // separate event so we've disabled it
-    this._wss.send(TSON.stringify<T>({ event: "conf", flags: 65536 + 32768 }));
+    this._wss.send(TSON.stringify({ event: "conf", flags: 65536 + 32768 }));
   }
 
   protected _sendSubTicker(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "subscribe",
         channel: "ticker",
         pair: remote_id
@@ -152,7 +152,7 @@ export class BitfinexClient extends BasicClient {
 
   protected _sendSubTrades(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "subscribe",
         channel: "trades",
         pair: remote_id
@@ -167,7 +167,7 @@ export class BitfinexClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "subscribe",
         channel: "book",
         pair: remote_id,
@@ -183,7 +183,7 @@ export class BitfinexClient extends BasicClient {
 
   protected _sendSubLevel3Updates(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "subscribe",
         channel: "book",
         pair: remote_id,
@@ -201,7 +201,7 @@ export class BitfinexClient extends BasicClient {
   protected _sendUnsubscribe(chanId) {
     if (chanId) {
       this._wss.send(
-        TSON.stringify<T>({
+        TSON.stringify({
           event: "unsubscribe",
           chanId: chanId
         })

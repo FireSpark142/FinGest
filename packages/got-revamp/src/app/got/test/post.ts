@@ -27,7 +27,7 @@ const defaultEndpoint: Handler = async (request, response) => {
 };
 
 const echoHeaders: Handler = (request, response) => {
-	response.end(TSON.stringify<T>(request.headers));
+	response.end(TSON.stringify(request.headers));
 };
 
 const echoMultipartBody: Handler = async (request, response) => {

@@ -5,7 +5,7 @@ import withServer from "./helpers/with-server.js";
 import TSON from "typescript-json";
 
 const echoHeaders: Handler = (request, response) => {
-	response.end(TSON.stringify<T>(request.headers));
+	response.end(TSON.stringify(request.headers));
 };
 
 test("merging instances", withServer, async (t, server) => {

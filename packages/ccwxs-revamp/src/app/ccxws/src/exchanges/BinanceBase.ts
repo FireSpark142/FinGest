@@ -133,7 +133,7 @@ export class BinanceBase extends BasicClient {
       if (this._tickersActive) return;
       this._tickersActive = true;
       this._wss.send(
-        TSON.stringify<T>({
+        TSON.stringify({
           method: "SUBSCRIBE",
           params: ["!ticker@arr"],
           id: ++this._messageId
@@ -141,7 +141,7 @@ export class BinanceBase extends BasicClient {
       );
     } else {
       this._wss.send(
-        TSON.stringify<T>({
+        TSON.stringify({
           method: "SUBSCRIBE",
           params: [`${remote_id.toLowerCase()}@ticker`],
           id: ++this._messageId
@@ -155,7 +155,7 @@ export class BinanceBase extends BasicClient {
       if (this._tickerSubs.size > 1) return;
       this._tickersActive = false;
       this._wss.send(
-        TSON.stringify<T>({
+        TSON.stringify({
           method: "UNSUBSCRIBE",
           params: ["!ticker@arr"],
           id: ++this._messageId
@@ -163,7 +163,7 @@ export class BinanceBase extends BasicClient {
       );
     } else {
       this._wss.send(
-        TSON.stringify<T>({
+        TSON.stringify({
           method: "UNSUBSCRIBE",
           params: [`${remote_id.toLowerCase()}@ticker`],
           id: ++this._messageId
@@ -175,7 +175,7 @@ export class BinanceBase extends BasicClient {
   protected __batchSub(args: any[]) {
     const params = args.map(p => p[0]);
     const id = ++this._messageId;
-    const msg = TSON.stringify<T>({
+    const msg = TSON.stringify({
       method: "SUBSCRIBE",
       params,
       id
@@ -186,7 +186,7 @@ export class BinanceBase extends BasicClient {
   protected __batchUnsub(args) {
     const params = args.map(p => p[0]);
     const id = ++this._messageId;
-    const msg = TSON.stringify<T>({
+    const msg = TSON.stringify({
       method: "UNSUBSCRIBE",
       params,
       id

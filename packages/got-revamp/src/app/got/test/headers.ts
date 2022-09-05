@@ -15,7 +15,7 @@ const supportsBrotli = typeof (process.versions as any).brotli === "string";
 
 const echoHeaders: Handler = (request, response) => {
 	request.resume();
-	response.end(TSON.stringify<T>(request.headers));
+	response.end(TSON.stringify(request.headers));
 };
 
 test("`user-agent`", withServer, async (t, server, got) => {

@@ -62,7 +62,7 @@ export async function startDataFlow() {
       requestObj.type = 'trade';
       log(requestObj);
       try {
-        const result = await redis.rpush(key, TSON.stringify<T>(requestObj));
+        const result = await redis.rpush(key, TSON.stringify(requestObj));
       } catch (err) {
         log(err);
       }

@@ -17,7 +17,7 @@ const errorString = "oops";
 const error = new Error(errorString);
 
 const echoHeaders: Handler = (request, response) => {
-	response.end(TSON.stringify<T>(request.headers));
+	response.end(TSON.stringify(request.headers));
 };
 
 const echoBody: Handler = async (request, response) => {
@@ -1312,7 +1312,7 @@ test("`beforeRequest` change body", withServer, async (t, server, got) => {
 		hooks: {
 			beforeRequest: [
 				options => {
-					options.body = TSON.stringify<T>({ payload: "new" });
+					options.body = TSON.stringify({ payload: "new" });
 					options.headers["content-length"] = options.body.length.toString();
 				}
 			]

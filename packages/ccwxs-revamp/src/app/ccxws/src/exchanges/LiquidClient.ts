@@ -72,7 +72,7 @@ export class LiquidClient extends BasicClient {
 
   protected _sendPing() {
     if (this._wss) {
-      this._wss.send(TSON.stringify<T>({ event: "pusher:ping", data: {} }));
+      this._wss.send(TSON.stringify({ event: "pusher:ping", data: {} }));
     }
   }
 
@@ -119,7 +119,7 @@ export class LiquidClient extends BasicClient {
     remote_id = remote_id.toLowerCase();
     const product_id = this.productIdMap.get(remote_id);
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "pusher:subscribe",
         data: {
           channel: `product_cash_${remote_id}_${product_id}`
@@ -132,7 +132,7 @@ export class LiquidClient extends BasicClient {
     remote_id = remote_id.toLowerCase();
     const product_id = this.productIdMap.get(remote_id);
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "pusher:unsubscribe",
         data: {
           channel: `product_cash_${remote_id}_${product_id}`
@@ -143,7 +143,7 @@ export class LiquidClient extends BasicClient {
 
   protected _sendSubTrades(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "pusher:subscribe",
         data: {
           channel: `executions_cash_${remote_id.toLowerCase()}`
@@ -154,7 +154,7 @@ export class LiquidClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "pusher:unsubscribe",
         data: {
           channel: `executions_cash_${remote_id.toLowerCase()}`
@@ -166,7 +166,7 @@ export class LiquidClient extends BasicClient {
   protected _sendSubLevel2Updates(remote_id: string) {
     remote_id = remote_id.toLowerCase();
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "pusher:subscribe",
         data: {
           channel: `price_ladders_cash_${remote_id}_buy`
@@ -174,7 +174,7 @@ export class LiquidClient extends BasicClient {
       })
     );
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "pusher:subscribe",
         data: {
           channel: `price_ladders_cash_${remote_id}_sell`
@@ -186,7 +186,7 @@ export class LiquidClient extends BasicClient {
   protected _sendUnsubLevel2Updates(remote_id: string) {
     remote_id = remote_id.toLowerCase();
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "pusher:unsubscribe",
         data: {
           channel: `price_ladders_cash_${remote_id}_buy`
@@ -194,7 +194,7 @@ export class LiquidClient extends BasicClient {
       })
     );
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         event: "pusher:unsubscribe",
         data: {
           channel: `price_ladders_cash_${remote_id}_sell`

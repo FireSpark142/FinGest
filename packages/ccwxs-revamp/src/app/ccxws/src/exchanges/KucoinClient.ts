@@ -106,7 +106,7 @@ export class KucoinClient extends BasicClient {
   protected _sendPing() {
     if (this._wss) {
       this._wss.send(
-        TSON.stringify<T>({
+        TSON.stringify({
           id: new Date().getTime(),
           type: "ping"
         })
@@ -172,7 +172,7 @@ export class KucoinClient extends BasicClient {
 
   protected _sendSubTicker(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "subscribe",
         topic: "/market/snapshot:" + remote_id,
@@ -184,7 +184,7 @@ export class KucoinClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "unsubscribe",
         topic: "/market/snapshot:" + remote_id,
@@ -196,7 +196,7 @@ export class KucoinClient extends BasicClient {
 
   protected _sendSubTrades(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "subscribe",
         topic: "/market/match:" + remote_id,
@@ -208,7 +208,7 @@ export class KucoinClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "unsubscribe",
         topic: "/market/match:" + remote_id,
@@ -220,7 +220,7 @@ export class KucoinClient extends BasicClient {
 
   protected _sendSubCandles(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "subscribe",
         topic: `/market/candles:${remote_id}_${candlePeriod(this.candlePeriod)}`,
@@ -232,7 +232,7 @@ export class KucoinClient extends BasicClient {
 
   protected _sendUnsubCandles(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "unsubscribe",
         topic: `/market/candles:${remote_id}_${candlePeriod(this.candlePeriod)}`,
@@ -247,7 +247,7 @@ export class KucoinClient extends BasicClient {
     this._requestLevel2Snapshot(market);
 
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "subscribe",
         topic: "/market/level2:" + remote_id,
@@ -258,7 +258,7 @@ export class KucoinClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "unsubscribe",
         topic: "/market/level2:" + remote_id,
@@ -272,7 +272,7 @@ export class KucoinClient extends BasicClient {
     this._requestLevel3Snapshot(market);
 
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "subscribe",
         topic: "/spotMarket/level3:" + remote_id,
@@ -283,7 +283,7 @@ export class KucoinClient extends BasicClient {
 
   protected _sendUnsubLevel3Updates(remote_id: string) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         id: new Date().getTime(),
         type: "unsubscribe",
         topic: "/spotMarket/level3:" + remote_id,

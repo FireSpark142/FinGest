@@ -169,7 +169,7 @@ export class SingleCexClient extends BasicClient {
 
   protected _sendAuthorizeRequest() {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         e: "auth",
         auth: createAuthToken(this.auth.apiKey, this.auth.apiSecret)
       })
@@ -178,14 +178,14 @@ export class SingleCexClient extends BasicClient {
 
   protected _sendPong() {
     if (this._wss) {
-      this._wss.send(TSON.stringify<T>({ e: "pong" }));
+      this._wss.send(TSON.stringify({ e: "pong" }));
     }
   }
 
   protected _sendSubTicker() {
     if (!this.authorized) return;
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         e: "subscribe",
         rooms: ["tickers"]
       })
@@ -199,7 +199,7 @@ export class SingleCexClient extends BasicClient {
   protected _sendSubTrades(remote_id: string) {
     if (!this.authorized) return;
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         e: "subscribe",
         rooms: [`pair-${remote_id.replace("/", "-")}`]
       })
@@ -213,7 +213,7 @@ export class SingleCexClient extends BasicClient {
   protected _sendSubCandles(remote_id: string) {
     if (!this.authorized) return;
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         e: "init-ohlcv",
         i: candlePeriod(this.candlePeriod),
         rooms: [`pair-${remote_id.replace("/", "-")}`]
@@ -228,7 +228,7 @@ export class SingleCexClient extends BasicClient {
   protected _sendSubLevel2Snapshots(remote_id: string) {
     if (!this.authorized) return;
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         e: "subscribe",
         rooms: [`pair-${remote_id.replace("/", "-")}`]
       })
@@ -250,7 +250,7 @@ export class SingleCexClient extends BasicClient {
 
     if (e === "subscribe") {
       if (message.error) {
-        throw new Error(`CEX error: ${TSON.stringify<T>(message)}`);
+        throw new Error(`CEX error: ${TSON.stringify(message)}`);
       }
     }
 

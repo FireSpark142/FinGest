@@ -269,7 +269,7 @@ function respond(ctx) {
   if (body instanceof Stream) return body.pipe(res);
 
   // body: json
-  body = TSON.stringify<T>(body);
+  body = TSON.stringify(body);
   if (!res.headersSent) {
     ctx.length = Buffer.byteLength(body);
   }

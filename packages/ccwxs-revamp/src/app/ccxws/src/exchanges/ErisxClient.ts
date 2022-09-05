@@ -63,7 +63,7 @@ export class ErisXClient extends BasicClient {
 
   public fetchSecurities() {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         correlation: "SecurityList",
         type: "SecurityList",
         securityGroup: "ALL"
@@ -77,7 +77,7 @@ export class ErisXClient extends BasicClient {
 
   protected _sendAuthentication() {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         correlation: this._nextId(),
         type: "AuthenticationRequest",
         token: this._createToken()
@@ -99,7 +99,7 @@ export class ErisXClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         correlation: this._nextId(),
         type: "MarketDataSubscribe",
         symbol: remote_id,
@@ -110,7 +110,7 @@ export class ErisXClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         correlation: this._nextId(),
         type: "MarketDataUnsubscribe",
         symbol: remote_id,
@@ -121,7 +121,7 @@ export class ErisXClient extends BasicClient {
 
   protected _sendSubLevel2Snapshots(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         correlation: this._nextId(),
         type: "TopOfBookMarketDataSubscribe",
         symbol: remote_id,
@@ -132,7 +132,7 @@ export class ErisXClient extends BasicClient {
 
   protected _sendUnsubLevel2Snapshots(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         correlation: this._nextId(),
         type: "TopOfBookMarketDataUnsubscribe",
         symbol: remote_id,
@@ -143,7 +143,7 @@ export class ErisXClient extends BasicClient {
 
   protected _sendSubLevel3Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         correlation: this._nextId(),
         type: "MarketDataSubscribe",
         symbol: remote_id
@@ -153,7 +153,7 @@ export class ErisXClient extends BasicClient {
 
   protected _sendUnsubLevel3Snapshots(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         correlation: this._nextId(),
         type: "MarketDataUnsubscribe",
         symbol: remote_id

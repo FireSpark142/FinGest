@@ -17,7 +17,7 @@ import TSON from "typescript-json";
 
 const echoHeaders: Handler = (request, response) => {
 	request.resume();
-	response.end(TSON.stringify<T>(request.headers));
+	response.end(TSON.stringify(request.headers));
 };
 
 test("preserves global defaults", withServer, async (t, server, got) => {

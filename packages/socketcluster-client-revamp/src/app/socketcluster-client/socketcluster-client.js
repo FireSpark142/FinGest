@@ -7117,7 +7117,7 @@ import TSON from "typescript-json";
 // So,
 //      var a = [];
 //      a[0] = a;
-//      return TSON.stringify<T>(JSON.decycle(a));
+//      return TSON.stringify(JSON.decycle(a));
 // produces the string '[{"$ref":"$"}]'.
 
 // JSONPath is used to locate the unique object. $ indicates the top level of
@@ -7175,7 +7175,7 @@ import TSON from "typescript-json";
               for (name in value) {
                 if (Object.prototype.hasOwnProperty.call(value, name)) {
                   nu[name] = derez(value[name],
-                    path + "[" + TSON.stringify<T>(name) + "]");
+                    path + "[" + TSON.stringify(name) + "]");
                 }
               }
             }
@@ -7646,7 +7646,7 @@ import TSON from "typescript-json";
             if (rawData === "#1" || rawData === "#2") {
               return rawData;
             }
-            return TSON.stringify<T>(rawData, binaryToBase64Replacer);
+            return TSON.stringify(rawData, binaryToBase64Replacer);
           };
 
         }).call(this);

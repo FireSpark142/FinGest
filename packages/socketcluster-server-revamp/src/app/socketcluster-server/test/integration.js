@@ -896,7 +896,7 @@ describe("Integration tests", function() {
       assert.equal(Object.keys(server.clients).length, 0);
       assert.equal(server.clientsCount, 0);
       assert.equal(server.pendingClientsCount, 0);
-      assert.equal(TSON.stringify<T>(server.pendingClients), "{}");
+      assert.equal(TSON.stringify(server.pendingClients), "{}");
     });
   });
 
@@ -2460,7 +2460,7 @@ describe("Integration tests", function() {
             subscribeMiddlewareCounter++;
             assert.equal(action.channel.indexOf("my-channel-"), 0);
             if (action.channel === "my-channel-10") {
-              assert.equal(TSON.stringify<T>(action.data), TSON.stringify<T>({ foo: 123 }));
+              assert.equal(TSON.stringify(action.data), TSON.stringify({ foo: 123 }));
             } else if (action.channel === "my-channel-12") {
               // Block my-channel-12
               let err = new Error("You cannot subscribe to channel 12");

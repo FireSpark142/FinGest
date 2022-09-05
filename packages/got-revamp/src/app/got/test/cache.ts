@@ -226,7 +226,7 @@ test("can disable cache by extending the instance", withServer, async (t, server
 test("does not break POST requests", withServer, async (t, server, got) => {
 	server.post("/", async (request, response) => {
 		request.resume();
-		response.end(TSON.stringify<T>(request.headers));
+		response.end(TSON.stringify(request.headers));
 	});
 
 	const headers = await got.post("", {
@@ -240,7 +240,7 @@ test("does not break POST requests", withServer, async (t, server, got) => {
 test("decompresses cached responses", withServer, async (t, server, got) => {
 	const etag = "foobar";
 
-	const payload = TSON.stringify<T>({ foo: "bar" });
+	const payload = TSON.stringify({ foo: "bar" });
 	const compressed = await promisify(gzip)(payload);
 
 	server.get("/", (request, response) => {
@@ -384,7 +384,7 @@ test("http-cache-semantics typings", t => {
 
 test("allows internal modifications", async t => {
 	nock("http://example.com").get("/test").reply(401);
-	nock("http://example.com").get("/test").reply(200, TSON.stringify<T>({
+	nock("http://example.com").get("/test").reply(200, TSON.stringify({
 		wat: ["123"]
 	}));
 
@@ -413,7 +413,7 @@ test("response.complete is true when using keepalive agent", withServer, async (
 
 	const etag = "foobar";
 
-	const payload = TSON.stringify<T>({ foo: "bar" });
+	const payload = TSON.stringify({ foo: "bar" });
 	const compressed = await promisify(gzip)(payload);
 
 	server.get("/", (request, response) => {

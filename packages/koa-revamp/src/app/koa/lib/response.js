@@ -218,7 +218,7 @@ module.exports = {
     if (!body || body instanceof Stream) return undefined;
     if (typeof body === "string") return Buffer.byteLength(body);
     if (Buffer.isBuffer(body)) return body.length;
-    return Buffer.byteLength(TSON.stringify<T>(body));
+    return Buffer.byteLength(TSON.stringify(body));
   },
 
   /**

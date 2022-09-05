@@ -191,7 +191,7 @@ export type Hooks = {
 			hooks: {
 				beforeRequest: [
 					options => {
-						options.body = TSON.stringify<T>({payload: 'new'});
+						options.body = TSON.stringify({payload: 'new'});
 						options.headers["content-length"] = options.body.length.toString();
 					}
 				]
@@ -720,7 +720,7 @@ const defaultInternals: Options["_internals"] = {
 	methodRewriting: false,
 	dnsLookupIpVersion: undefined,
 	parseJson: JSON.parse,
-	stringifyJson: TSON.stringify<T>,
+	stringifyJson: TSON.stringify,
 	retry: {
 		limit: 2,
 		methods: [
@@ -1967,7 +1967,7 @@ export default class Options {
 	import got from 'got';
 
 	await got.post('https://example.com', {
-		stringifyJson: object => TSON.stringify<T>(object, (key, value) => {
+		stringifyJson: object => TSON.stringify(object, (key, value) => {
 			if (key.startsWith("_")) {
 				return;
 			}
@@ -1986,7 +1986,7 @@ export default class Options {
 	import got from 'got';
 
 	await got.post('https://example.com', {
-		stringifyJson: object => TSON.stringify<T>(object, (key, value) => {
+		stringifyJson: object => TSON.stringify(object, (key, value) => {
 			if (typeof value === 'number') {
 				return value.toString();
 			}

@@ -32,7 +32,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendSubTicker(market) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "subscribe",
         channel: "ticker",
         market
@@ -42,7 +42,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendUnsubTicker(market) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "unsubscribe",
         channel: "ticker",
         market
@@ -52,7 +52,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendSubTrades(market) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "subscribe",
         channel: "trades",
         market
@@ -62,7 +62,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendUnsubTrades(market) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "unsubscribe",
         channel: "trades",
         market
@@ -72,7 +72,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendSubLevel2Updates(market) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "subscribe",
         channel: "orderbook",
         market
@@ -82,7 +82,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(market) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "subscribe",
         channel: "orderbook",
         market

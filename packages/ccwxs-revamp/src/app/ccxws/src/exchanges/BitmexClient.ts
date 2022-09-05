@@ -66,7 +66,7 @@ export class BitmexClient extends BasicClient {
 
   protected _sendSubQuote(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "subscribe",
         args: [`quote:${remote_id}`]
       })
@@ -75,7 +75,7 @@ export class BitmexClient extends BasicClient {
 
   protected _sendUnsubQuote(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "unsubscribe",
         args: [`quote:${remote_id}`]
       })
@@ -84,7 +84,7 @@ export class BitmexClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "subscribe",
         args: [`trade:${remote_id}`]
       })
@@ -93,7 +93,7 @@ export class BitmexClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "unsubscribe",
         args: [`trade:${remote_id}`]
       })
@@ -102,7 +102,7 @@ export class BitmexClient extends BasicClient {
 
   protected _sendSubCandles(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "subscribe",
         args: [`tradeBin${candlePeriod(this.candlePeriod)}:${remote_id}`]
       })
@@ -111,7 +111,7 @@ export class BitmexClient extends BasicClient {
 
   protected _sendUnsubCandles(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "unsubscribe",
         args: [`tradeBin${candlePeriod(this.candlePeriod)}:${remote_id}`]
       })
@@ -120,7 +120,7 @@ export class BitmexClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "subscribe",
         args: [`orderBookL2:${remote_id}`]
       })
@@ -129,7 +129,7 @@ export class BitmexClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      TSON.stringify<T>({
+      TSON.stringify({
         op: "unsubscribe",
         args: [`orderBookL2:${remote_id}`]
       })

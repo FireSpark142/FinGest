@@ -587,7 +587,7 @@ test("reuses request options on retry", withServer, async (t, server, got) => {
 			return;
 		}
 
-		response.end(TSON.stringify<T>(request.headers));
+		response.end(TSON.stringify(request.headers));
 	});
 
 	const { body, retryCount } = await got("", { timeout: { request: 1000 }, responseType: "json" });
@@ -608,7 +608,7 @@ test("respects backoffLimit", withServer, async (t, server, got) => {
 		timestamp = now;
 
 		if (count === 3) {
-			response.end(TSON.stringify<T>(data));
+			response.end(TSON.stringify(data));
 		} else {
 			response.statusCode = 408;
 			response.end();
