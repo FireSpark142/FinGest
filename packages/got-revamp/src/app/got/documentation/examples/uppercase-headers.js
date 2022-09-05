@@ -1,5 +1,6 @@
 import http from "node:http";
 import got from "../../dist/source/index.js";
+import TSON from "typescript-json";
 
 // Wraps an existing Agent instance
 class WrappedAgent {
@@ -80,5 +81,5 @@ const server = http.createServer((request, response) => {
 		headers[rawHeaders[i]] = rawHeaders[i + 1];
 	}
 
-	response.end(JSON.stringify(headers));
+	response.end(TSON.stringify<T>(headers));
 }).listen(0, main);

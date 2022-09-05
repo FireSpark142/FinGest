@@ -2,6 +2,7 @@ import * as JSON from 'JSON';
 import * as ccxt from 'ccxt';
 import * as util from 'util';
 import Redis from 'ioredis';
+import TSON from "typescript-json";
 
 export async function startDataFlow() {
   const globalAny: any = global;
@@ -61,7 +62,7 @@ export async function startDataFlow() {
       requestObj.type = 'trade';
       log(requestObj);
       try {
-        const result = await redis.rpush(key, JSON.stringify(requestObj));
+        const result = await redis.rpush(key, TSON.stringify<T>(requestObj));
       } catch (err) {
         log(err);
       }

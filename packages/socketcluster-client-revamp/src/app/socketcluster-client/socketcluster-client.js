@@ -1,6 +1,9 @@
 /**
  * SocketCluster JavaScript client v17.0.0
  */
+import TSON from "typescript-json";
+
+
 (function(f) {
   if (typeof exports === "object" && typeof module !== "undefined") {
     module.exports = f();
@@ -7114,7 +7117,7 @@
 // So,
 //      var a = [];
 //      a[0] = a;
-//      return JSON.stringify(JSON.decycle(a));
+//      return TSON.stringify<T>(JSON.decycle(a));
 // produces the string '[{"$ref":"$"}]'.
 
 // JSONPath is used to locate the unique object. $ indicates the top level of
@@ -7172,7 +7175,7 @@
               for (name in value) {
                 if (Object.prototype.hasOwnProperty.call(value, name)) {
                   nu[name] = derez(value[name],
-                    path + "[" + JSON.stringify(name) + "]");
+                    path + "[" + TSON.stringify<T>(name) + "]");
                 }
               }
             }
@@ -7643,7 +7646,7 @@
             if (rawData === "#1" || rawData === "#2") {
               return rawData;
             }
-            return JSON.stringify(rawData, binaryToBase64Replacer);
+            return TSON.stringify<T>(rawData, binaryToBase64Replacer);
           };
 
         }).call(this);

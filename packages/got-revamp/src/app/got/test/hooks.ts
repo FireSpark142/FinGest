@@ -11,12 +11,13 @@ import type { Handler } from "express";
 import Responselike from "responselike";
 import got, { HTTPError, type OptionsInit, RequestError, type Response } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const errorString = "oops";
 const error = new Error(errorString);
 
 const echoHeaders: Handler = (request, response) => {
-	response.end(JSON.stringify(request.headers));
+	response.end(TSON.stringify<T>(request.headers));
 };
 
 const echoBody: Handler = async (request, response) => {
@@ -1311,7 +1312,7 @@ test("`beforeRequest` change body", withServer, async (t, server, got) => {
 		hooks: {
 			beforeRequest: [
 				options => {
-					options.body = JSON.stringify({ payload: "new" });
+					options.body = TSON.stringify<T>({ payload: "new" });
 					options.headers["content-length"] = options.body.length.toString();
 				}
 			]

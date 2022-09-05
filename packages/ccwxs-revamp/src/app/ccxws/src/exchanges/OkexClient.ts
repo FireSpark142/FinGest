@@ -18,6 +18,7 @@ import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
 import * as zlib from "../ZlibUtils";
+import TSON from "typescript-json";
 
 const pongBuffer = Buffer.from("pong");
 
@@ -168,7 +169,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendSubTicker(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         args: [this._marketArg("ticker", market)]
       })
@@ -177,7 +178,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "unsubscribe",
         args: [this._marketArg("ticker", market)]
       })
@@ -186,7 +187,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendSubTrades(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         args: [this._marketArg("trade", market)]
       })
@@ -195,7 +196,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "unsubscribe",
         args: [this._marketArg("trade", market)]
       })
@@ -204,7 +205,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendSubCandles(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         args: [this._marketArg("candle" + this._candlePeriod(this.candlePeriod), market)]
       })
@@ -213,7 +214,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendUnsubCandles(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "unsubscribe",
         args: [this._marketArg("candle" + this._candlePeriod(this.candlePeriod), market)]
       })
@@ -222,7 +223,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendSubLevel2Snapshots(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         args: [this._marketArg("depth5", market)]
       })
@@ -231,7 +232,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendUnsubLevel2Snapshots(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "unsubscribe",
         args: [this._marketArg("depth5", market)]
       })
@@ -240,7 +241,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         args: [this._marketArg("depth_l2_tbt", market)]
       })
@@ -249,7 +250,7 @@ export class OkexClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id, market) {
     this._sendMessage(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "unsubscribe",
         args: [this._marketArg("depth_l2_tbt", market)]
       })
@@ -292,7 +293,7 @@ export class OkexClient extends BasicClient {
     // prevent failed messages from
     if (!msg.data) {
       // eslint-disable-next-line no-console
-      console.warn("warn: failure response", JSON.stringify(msg));
+      console.warn("warn: failure response", TSON.stringify<T>(msg));
       return;
     }
 

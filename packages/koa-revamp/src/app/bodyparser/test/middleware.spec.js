@@ -8,6 +8,7 @@
  *   dead_horse <dead_horse@qq.com> (http://deadhorse.me)
  *   fengmk2 <m@fengmk2.com> (http://fengmk2.com)
  */
+import TSON from "typescript-json";
 
 "use strict";
 
@@ -131,7 +132,7 @@ describe("test/middleware.test.js", function() {
 
         request(app.listen())
           .post("/foo.json")
-          .send(JSON.stringify({ foo: "bar" }))
+          .send(TSON.stringify<T>({ foo: "bar" }))
           .expect({ foo: "bar" }, done);
       });
 
@@ -149,7 +150,7 @@ describe("test/middleware.test.js", function() {
 
         request(app.listen())
           .post("/foo")
-          .send(JSON.stringify({ foo: "bar" }))
+          .send(TSON.stringify<T>({ foo: "bar" }))
           .expect({ "{\"foo\":\"bar\"}": "" }, done);
       });
     });
@@ -309,7 +310,7 @@ describe("test/middleware.test.js", function() {
       request(app.listen())
         .post("/")
         .type("application/x-javascript")
-        .send(JSON.stringify({ foo: "bar" }))
+        .send(TSON.stringify<T>({ foo: "bar" }))
         .expect({ foo: "bar" }, done);
     });
 
@@ -326,7 +327,7 @@ describe("test/middleware.test.js", function() {
       request(app.listen())
         .post("/")
         .type("application/x-javascript")
-        .send(JSON.stringify({ foo: "bar" }))
+        .send(TSON.stringify<T>({ foo: "bar" }))
         .expect({ foo: "bar" }, done);
     });
 

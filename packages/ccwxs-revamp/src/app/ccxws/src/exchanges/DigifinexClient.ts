@@ -12,6 +12,7 @@ import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
 import * as zlib from "../ZlibUtils";
+import TSON from "typescript-json";
 
 /**
  * Implements the exchange according to API specifications:
@@ -39,7 +40,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendSubTicker(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "ticker.subscribe",
         params: [remote_id],
         id: ++this.id
@@ -49,7 +50,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "ticker.unsubscribe",
         params: [remote_id],
         id: ++this.id
@@ -59,7 +60,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "trades.subscribe",
         params: [remote_id],
         id: ++this.id
@@ -69,7 +70,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "trades.unsubscribe",
         params: [remote_id],
         id: ++this.id
@@ -79,7 +80,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "depth.subscribe",
         params: [remote_id],
         id: ++this.id
@@ -89,7 +90,7 @@ export class DigifinexClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "depth.unsubscribe",
         params: [remote_id],
         id: ++this.id

@@ -22,6 +22,7 @@ import { Trade } from "../Trade";
 import { wait } from "../Util";
 import * as https from "../Https";
 import * as zlib from "../ZlibUtils";
+import TSON from "typescript-json";
 
 /**
  * Implements the v3 API:
@@ -88,7 +89,7 @@ export class BittrexClient extends BasicClient {
 
   protected _sendHeartbeat() {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         H: "c3",
         M: "Subscribe",
         A: [["heartbeat"]],
@@ -101,7 +102,7 @@ export class BittrexClient extends BasicClient {
     if (this._subbedTickers) return;
     this._subbedTickers = true;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         H: "c3",
         M: "Subscribe",
         A: [["market_summaries"]],
@@ -116,7 +117,7 @@ export class BittrexClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         H: "c3",
         M: "Subscribe",
         A: [[`trade_${remote_id}`]],
@@ -127,7 +128,7 @@ export class BittrexClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         H: "c3",
         M: "Unsubscribe",
         A: [[`trade_${remote_id}`]],
@@ -138,7 +139,7 @@ export class BittrexClient extends BasicClient {
 
   protected _sendSubCandles(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         H: "c3",
         M: "Subscribe",
         A: [[`candle_${remote_id}_${candlePeriod(this.candlePeriod)}`]],
@@ -149,7 +150,7 @@ export class BittrexClient extends BasicClient {
 
   protected _sendUnsubCandles(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         H: "c3",
         M: "Unsubscribe",
         A: [[`candle_${remote_id}_${candlePeriod(this.candlePeriod)}`]],
@@ -161,7 +162,7 @@ export class BittrexClient extends BasicClient {
   protected _sendSubLevel2Updates(remote_id, market) {
     this._requestLevel2Snapshot(market);
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         H: "c3",
         M: "Subscribe",
         A: [[`orderbook_${remote_id}_${this.orderBookDepth}`]],
@@ -172,7 +173,7 @@ export class BittrexClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         H: "c3",
         M: "Subscribe",
         A: [[`orderbook_${remote_id}_${this.orderBookDepth}`]],
@@ -203,7 +204,7 @@ export class BittrexClient extends BasicClient {
     // Retry HTTP requests until we are successful
     while (!wssPath) {
       try {
-        const data = JSON.stringify([{ name: "c3" }]);
+        const data = TSON.stringify<T>([{ name: "c3" }]);
         const negotiations: any = await https.get(
           `https://socket-v3.bittrex.com/signalr/negotiate?connectionData=${data}&clientProtocol=1.5`
         );

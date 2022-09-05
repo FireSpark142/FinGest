@@ -13,6 +13,7 @@ import { Level2Snapshot } from "../Level2Snapshots";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
 
 export class DeribitClient extends BasicClient {
   public id: number;
@@ -46,7 +47,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendSubTicker(remote_id) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         jsonrpc: "2.0",
         method: "public/subscribe",
         params: {
@@ -59,7 +60,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         jsonrpc: "2.0",
         method: "public/unsubscribe",
         params: {
@@ -72,7 +73,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         jsonrpc: "2.0",
         method: "public/subscribe",
         params: {
@@ -85,7 +86,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         jsonrpc: "2.0",
         method: "public/unsubscribe",
         params: {
@@ -98,7 +99,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendSubCandles(remote_id) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         jsonrpc: "2.0",
         method: "public/subscribe",
         params: {
@@ -111,7 +112,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendUnsubCandles(remote_id) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         jsonrpc: "2.0",
         method: "public/unsubscribe",
         params: {
@@ -124,7 +125,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         jsonrpc: "2.0",
         method: "public/subscribe",
         params: {
@@ -137,7 +138,7 @@ export class DeribitClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         jsonrpc: "2.0",
         method: "public/unsubscribe",
         params: {

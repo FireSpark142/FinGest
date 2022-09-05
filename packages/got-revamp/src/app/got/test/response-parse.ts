@@ -4,9 +4,10 @@ import type { Handler } from "express";
 import getStream from "get-stream";
 import { HTTPError, ParseError } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const dog = { data: "dog" };
-const jsonResponse = JSON.stringify(dog);
+const jsonResponse = TSON.stringify<T>(dog);
 
 const defaultHandler: Handler = (_request, response) => {
 	response.end(jsonResponse);
@@ -144,7 +145,7 @@ test("parse errors have `response` property", withServer, async (t, server, got)
 
 test("sets correct headers", withServer, async (t, server, got) => {
 	server.post("/", (request, response) => {
-		response.end(JSON.stringify(request.headers));
+		response.end(TSON.stringify<T>(request.headers));
 	});
 
 	const { body: headers } = await got.post<Record<string, string>>({ responseType: "json", json: {} });
@@ -196,8 +197,8 @@ test("shortcuts throw ParseErrors", withServer, async (t, server, got) => {
 });
 
 test("shortcuts result properly when retrying in afterResponse", withServer, async (t, server, got) => {
-	const nasty = JSON.stringify({ hello: "nasty" });
-	const proper = JSON.stringify({ hello: "world" });
+	const nasty = TSON.stringify<T>({ hello: "nasty" });
+	const proper = TSON.stringify<T>({ hello: "world" });
 
 	server.get("/", (request, response) => {
 		if (request.headers.token === "unicorn") {

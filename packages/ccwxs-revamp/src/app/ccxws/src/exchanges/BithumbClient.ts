@@ -16,6 +16,7 @@ import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
 import * as https from "../Https";
 import { NotImplementedFn } from "../NotImplementedFn";
+import TSON from "typescript-json";
 
 export class BithumbClient extends BasicClient {
   public remoteIdMap: Map<string, string>;
@@ -55,7 +56,7 @@ export class BithumbClient extends BasicClient {
   protected __sendSubTicker() {
     const symbols = Array.from(this._tickerSubs.keys());
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "ticker",
         symbols,
         tickTypes: ["24H"]
@@ -70,7 +71,7 @@ export class BithumbClient extends BasicClient {
   protected __sendSubTrades() {
     const symbols = Array.from(this._tradeSubs.keys());
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "transaction",
         symbols
       })
@@ -87,7 +88,7 @@ export class BithumbClient extends BasicClient {
       this._requestLevel2Snapshot(this._level2UpdateSubs.get(symbol));
     }
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "orderbookdepth",
         symbols
       })

@@ -16,6 +16,7 @@ import { NotImplementedFn } from "../NotImplementedFn";
 import { SubscriptionType } from "../SubscriptionType";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
 
 export type CoinexClientOptions = {
   //
@@ -100,7 +101,7 @@ export class CoinexSingleClient extends BasicClient {
   protected _sendPing() {
     if (this._wss) {
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "server.ping",
           params: [],
           id: ++this._id
@@ -138,7 +139,7 @@ export class CoinexSingleClient extends BasicClient {
     const id = this._id++;
     this._idSubMap.set(id, { remote_id, type: SubscriptionType.ticker });
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "state.subscribe",
         params: [remote_id],
         id
@@ -148,7 +149,7 @@ export class CoinexSingleClient extends BasicClient {
 
   protected _sendUnsubTicker() {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "state.unsubscribe"
       })
     );
@@ -158,7 +159,7 @@ export class CoinexSingleClient extends BasicClient {
     const id = this._id++;
     this._idSubMap.set(id, { remote_id, type: SubscriptionType.trade });
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "deals.subscribe",
         params: [remote_id],
         id
@@ -168,7 +169,7 @@ export class CoinexSingleClient extends BasicClient {
 
   protected _sendUnsubTrades() {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "deals.unsubscribe"
       })
     );
@@ -178,7 +179,7 @@ export class CoinexSingleClient extends BasicClient {
     const id = this._id++;
     this._idSubMap.set(id, { remote_id, type: SubscriptionType.level2update });
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "depth.subscribe",
         params: [remote_id, 50, "0"],
         id
@@ -188,7 +189,7 @@ export class CoinexSingleClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates() {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "depth.unsubscribe"
       })
     );

@@ -15,6 +15,7 @@ import is from "@sindresorhus/is";
 import delay from "delay";
 import got, { HTTPError, RequestError } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const pStreamPipeline = promisify(stream.pipeline);
 
@@ -43,7 +44,7 @@ const errorHandler: Handler = (_request, response) => {
 };
 
 const headersHandler: Handler = (request, response) => {
-	response.end(JSON.stringify(request.headers));
+	response.end(TSON.stringify<T>(request.headers));
 };
 
 const infiniteHandler: Handler = (_request, response) => {

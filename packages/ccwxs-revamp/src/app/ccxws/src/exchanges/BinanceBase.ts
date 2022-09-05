@@ -40,6 +40,7 @@ import { Trade } from "../Trade";
 import { Market } from "../Market";
 import { Level2Update } from "../Level2Update";
 import * as https from "../Https";
+import TSON from "typescript-json";
 
 export type BinanceClientOptions = {
   name?: string;
@@ -132,7 +133,7 @@ export class BinanceBase extends BasicClient {
       if (this._tickersActive) return;
       this._tickersActive = true;
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "SUBSCRIBE",
           params: ["!ticker@arr"],
           id: ++this._messageId
@@ -140,7 +141,7 @@ export class BinanceBase extends BasicClient {
       );
     } else {
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "SUBSCRIBE",
           params: [`${remote_id.toLowerCase()}@ticker`],
           id: ++this._messageId
@@ -154,7 +155,7 @@ export class BinanceBase extends BasicClient {
       if (this._tickerSubs.size > 1) return;
       this._tickersActive = false;
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "UNSUBSCRIBE",
           params: ["!ticker@arr"],
           id: ++this._messageId
@@ -162,7 +163,7 @@ export class BinanceBase extends BasicClient {
       );
     } else {
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "UNSUBSCRIBE",
           params: [`${remote_id.toLowerCase()}@ticker`],
           id: ++this._messageId
@@ -174,7 +175,7 @@ export class BinanceBase extends BasicClient {
   protected __batchSub(args: any[]) {
     const params = args.map(p => p[0]);
     const id = ++this._messageId;
-    const msg = JSON.stringify({
+    const msg = TSON.stringify<T>({
       method: "SUBSCRIBE",
       params,
       id
@@ -185,7 +186,7 @@ export class BinanceBase extends BasicClient {
   protected __batchUnsub(args) {
     const params = args.map(p => p[0]);
     const id = ++this._messageId;
-    const msg = JSON.stringify({
+    const msg = TSON.stringify<T>({
       method: "UNSUBSCRIBE",
       params,
       id

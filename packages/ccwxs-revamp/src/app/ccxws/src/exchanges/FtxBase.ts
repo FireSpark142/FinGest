@@ -11,6 +11,7 @@ import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
 import moment = require("moment");
+import TSON from "typescript-json";
 
 export class FtxBaseClient extends BasicClient {
   protected _sendSubCandles = NotImplementedFn;
@@ -31,7 +32,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendSubTicker(market) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         channel: "ticker",
         market
@@ -41,7 +42,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendUnsubTicker(market) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "unsubscribe",
         channel: "ticker",
         market
@@ -51,7 +52,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendSubTrades(market) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         channel: "trades",
         market
@@ -61,7 +62,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendUnsubTrades(market) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "unsubscribe",
         channel: "trades",
         market
@@ -71,7 +72,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendSubLevel2Updates(market) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         channel: "orderbook",
         market
@@ -81,7 +82,7 @@ export class FtxBaseClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(market) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         op: "subscribe",
         channel: "orderbook",
         market

@@ -1,3 +1,5 @@
+import TSON from "typescript-json";
+
 "use strict";
 
 const assert = require("assert");
@@ -13,7 +15,7 @@ describe("ctx.toJSON()", () => {
     ctx.status = 200;
     ctx.body = "<p>Hey</p>";
 
-    const obj = JSON.parse(JSON.stringify(ctx));
+    const obj = JSON.parse(TSON.stringify<T>(ctx));
     const req = obj.request;
     const res = obj.response;
 

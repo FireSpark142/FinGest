@@ -15,6 +15,7 @@ import { Level2Update } from "../Level2Update";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
 
 export class HitBtcClient extends BasicClient {
   public candlePeriod: CandlePeriod;
@@ -54,7 +55,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendSubTicker(remote_id: string) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "subscribeTicker",
         params: {
           symbol: remote_id
@@ -66,7 +67,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id: string) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "unsubscribeTicker",
         params: {
           symbol: remote_id
@@ -77,7 +78,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendSubTrades(remote_id: string) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "subscribeTrades",
         params: {
           symbol: remote_id
@@ -89,7 +90,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id: string) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "unsubscribeTrades",
         params: {
           symbol: remote_id
@@ -100,7 +101,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendSubCandles(remote_id: string) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "subscribeCandles",
         params: {
           symbol: remote_id,
@@ -113,7 +114,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendUnsubCandles(remote_id: string) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "unsubscribeCandles",
         params: {
           symbol: remote_id,
@@ -125,7 +126,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id: string) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "subscribeOrderbook",
         params: {
           symbol: remote_id
@@ -137,7 +138,7 @@ export class HitBtcClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id: string) {
     this._send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "unsubscribeOrderbook",
         params: {
           symbol: remote_id

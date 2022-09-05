@@ -1,3 +1,4 @@
+import TSON from "typescript-json";
 "use strict";
 
 /**
@@ -217,7 +218,7 @@ module.exports = {
     if (!body || body instanceof Stream) return undefined;
     if (typeof body === "string") return Buffer.byteLength(body);
     if (Buffer.isBuffer(body)) return body.length;
-    return Buffer.byteLength(JSON.stringify(body));
+    return Buffer.byteLength(TSON.stringify<T>(body));
   },
 
   /**

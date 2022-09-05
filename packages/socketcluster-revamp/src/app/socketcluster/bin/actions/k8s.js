@@ -1,3 +1,5 @@
+import TSON from "typescript-json";
+
 const path = require("path");
 const { execSync } = require("child_process");
 const fs = require("fs-extra");
@@ -94,7 +96,7 @@ const k8sDeployAndDeployUpdate = async function(arg1, options, updateRequest) {
   let saveSocketClusterK8sConfigFile = function(socketClusterK8sConfigJSON) {
     fs.writeFileSync(
       socketClusterK8sConfigFilePath,
-      JSON.stringify(socketClusterK8sConfigJSON, null, 2)
+      TSON.stringify<T>(socketClusterK8sConfigJSON, null, 2)
     );
   };
 

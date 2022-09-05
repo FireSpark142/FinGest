@@ -16,6 +16,8 @@ import { Level2Update } from "../Level2Update";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
+
 
 export type KrakenClientOptions = ClientOptions & { autoloadSymbolMaps?: boolean };
 
@@ -153,7 +155,7 @@ export class KrakenClient extends BasicClient {
       const wsSymbols = this._wsSymbolsFromSubMap(subMap);
       if (!this._wss) return;
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           event: subscribe ? "subscribe" : "unsubscribe",
           pair: wsSymbols,
           subscription

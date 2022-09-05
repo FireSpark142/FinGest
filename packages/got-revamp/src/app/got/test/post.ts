@@ -17,6 +17,7 @@ import FormData from "form-data";
 import toReadableStream from "to-readable-stream";
 import got, { UploadError } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const pStreamPipeline = promisify(stream.pipeline);
 
@@ -26,7 +27,7 @@ const defaultEndpoint: Handler = async (request, response) => {
 };
 
 const echoHeaders: Handler = (request, response) => {
-	response.end(JSON.stringify(request.headers));
+	response.end(TSON.stringify<T>(request.headers));
 };
 
 const echoMultipartBody: Handler = async (request, response) => {

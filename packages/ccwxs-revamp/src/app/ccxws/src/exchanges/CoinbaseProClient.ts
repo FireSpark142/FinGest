@@ -16,6 +16,8 @@ import { Market } from "../Market";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
+
 
 export class CoinbaseProClient extends BasicClient {
   protected _sendSubCandles = NotImplementedFn;
@@ -35,7 +37,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendSubTicker(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "subscribe",
         product_ids: [remote_id],
         channels: ["ticker"]
@@ -45,7 +47,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "unsubscribe",
         product_ids: [remote_id],
         channels: ["ticker"]
@@ -55,7 +57,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "subscribe",
         product_ids: [remote_id],
         channels: ["matches"]
@@ -65,7 +67,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "unsubscribe",
         product_ids: [remote_id],
         channels: ["matches"]
@@ -75,7 +77,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendSubLevel2Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "subscribe",
         product_ids: [remote_id],
         channels: ["level2"]
@@ -85,7 +87,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "unsubscribe",
         product_ids: [remote_id],
         channels: ["level2"]
@@ -95,7 +97,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendSubLevel3Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "subscribe",
         product_ids: [remote_id],
         channels: ["full"]
@@ -105,7 +107,7 @@ export class CoinbaseProClient extends BasicClient {
 
   protected _sendUnsubLevel3Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         type: "unsubscribe",
         product_ids: [remote_id],
         channels: ["full"]

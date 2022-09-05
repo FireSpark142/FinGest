@@ -1,3 +1,4 @@
+import TSON from "typescript-json";
 "use strict";
 
 const request = require("supertest");
@@ -95,7 +96,7 @@ describe("ctx.flushHeaders()", () => {
       ctx.flushHeaders();
 
       setTimeout(() => {
-        stream.end(JSON.stringify({ message: "hello!" }));
+        stream.end(TSON.stringify<T>({ message: "hello!" }));
       }, 10000);
     });
 

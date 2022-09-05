@@ -7,6 +7,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 
 import zlib from "zlib";
+import TSON from "typescript-json";
 import { IClient } from "../IClient";
 import { EventEmitter } from "events";
 import { Watcher } from "../Watcher";
@@ -278,13 +279,13 @@ export class BiboxBasicClient extends BasicClient {
    second attempt.
    */
   protected _sendPong(id) {
-    this._wss.send(JSON.stringify({ pong: id }));
+    this._wss.send(TSON.stringify<T>({ pong: id }));
   }
 
   protected _sendSubTicker(remote_id: string) {
     this.subCount++;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "addChannel",
         channel: `bibox_sub_spot_${remote_id}_ticker`
       })
@@ -294,7 +295,7 @@ export class BiboxBasicClient extends BasicClient {
   protected async _sendUnsubTicker(remote_id: string) {
     this.subCount--;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "removeChannel",
         channel: `bibox_sub_spot_${remote_id}_ticker`
       })
@@ -304,7 +305,7 @@ export class BiboxBasicClient extends BasicClient {
   protected async _sendSubTrades(remote_id: string) {
     this.subCount++;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "addChannel",
         channel: `bibox_sub_spot_${remote_id}_deals`
       })
@@ -314,7 +315,7 @@ export class BiboxBasicClient extends BasicClient {
   protected _sendUnsubTrades(remote_id: string) {
     this.subCount--;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "removeChannel",
         channel: `bibox_sub_spot_${remote_id}_deals`
       })
@@ -324,7 +325,7 @@ export class BiboxBasicClient extends BasicClient {
   protected _sendSubCandles(remote_id) {
     this.subCount++;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "addChannel",
         channel: `bibox_sub_spot_${remote_id}_kline_${candlePeriod(this.candlePeriod)}`
       })
@@ -334,7 +335,7 @@ export class BiboxBasicClient extends BasicClient {
   protected async _sendUnsubCandles(remote_id) {
     this.subCount--;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "removeChannel",
         channel: `bibox_sub_spot_${remote_id}_kline_${candlePeriod(this.candlePeriod)}`
       })
@@ -344,7 +345,7 @@ export class BiboxBasicClient extends BasicClient {
   protected async _sendSubLevel2Snapshots(remote_id) {
     this.subCount++;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "addChannel",
         channel: `bibox_sub_spot_${remote_id}_depth`
       })
@@ -354,7 +355,7 @@ export class BiboxBasicClient extends BasicClient {
   protected async _sendUnsubLevel2Snapshots(remote_id) {
     this.subCount--;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "removeChannel",
         channel: `bibox_sub_spot_${remote_id}_depth`
       })

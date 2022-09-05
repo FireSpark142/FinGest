@@ -1,3 +1,5 @@
+import TSON from "typescript-json";
+
 const cloneDeep = require("clone-deep");
 const WritableConsumableStream = require("writable-consumable-stream");
 const StreamDemux = require("stream-demux");
@@ -975,7 +977,7 @@ AGServerSocket.prototype._destroy = function(code, reason) {
         let reasonString;
         if (typeof reason === "object") {
           try {
-            reasonString = JSON.stringify(reason);
+            reasonString = TSON.stringify<T>(reason);
           } catch (error) {
             reasonString = reason.toString();
           }

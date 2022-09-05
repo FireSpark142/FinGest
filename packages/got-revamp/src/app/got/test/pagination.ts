@@ -6,6 +6,7 @@ import getStream from "get-stream";
 import got, { type Response } from "../source/index.js";
 import withServer, { withBodyParsingServer } from "./helpers/with-server.js";
 import type { ExtendedHttpTestServer } from "./helpers/create-http-test-server.js";
+import TSON from "typescript-json";
 
 const thrower = (): any => {
 	throw new Error("This should not be called");
@@ -38,7 +39,7 @@ test("the link header has no next value", withServer, async (t, server, got) => 
 
 	server.get("/", (_request, response) => {
 		response.setHeader("link", "<https://example.com>; rel=\"prev\"");
-		response.end(JSON.stringify(items));
+		response.end(TSON.stringify<T>(items));
 	});
 
 	const received = await got.paginate.all<number>("");
@@ -50,7 +51,7 @@ test("the link header is empty", withServer, async (t, server, got) => {
 
 	server.get("/", (_request, response) => {
 		response.setHeader("link", "");
-		response.end(JSON.stringify(items));
+		response.end(TSON.stringify<T>(items));
 	});
 
 	const received = await got.paginate.all<number>("");
@@ -337,7 +338,7 @@ test("allowGetBody sends json payload with .paginate()", withBodyParsingServer, 
 			response.statusCode = 400;
 		}
 
-		response.end(JSON.stringify([1, 2, 3]));
+		response.end(TSON.stringify<T>([1, 2, 3]));
 	});
 
 	const iterator = got.paginate<number>({
@@ -360,7 +361,7 @@ test("allowGetBody sends json payload with .paginate()", withBodyParsingServer, 
 test("`hooks` are not duplicated", withServer, async (t, server, got) => {
 	let page = 1;
 	server.get("/", (_request, response) => {
-		response.end(JSON.stringify([page++]));
+		response.end(TSON.stringify<T>([page++]));
 	});
 
 	const nopHook = () => {
@@ -410,7 +411,7 @@ test("allowGetBody sends correct json payload with .paginate()", withServer, asy
 			t.is(Number(request.headers["content-length"] || 0), Buffer.byteLength(payload));
 		}
 
-		response.end(JSON.stringify([page++]));
+		response.end(TSON.stringify<T>([page++]));
 	});
 
 	let body = "";
@@ -552,7 +553,7 @@ test("next url in json response", withServer, async (t, server, got) => {
 		const parameters = new URLSearchParams(request.url.slice(2));
 		const page = Number(parameters.get("page") ?? 0);
 
-		response.end(JSON.stringify({
+		response.end(TSON.stringify<T>({
 			currentUrl: request.url,
 			next: page < 3 ? `${server.url}/?page=${page + 1}` : undefined
 		}));
@@ -599,7 +600,7 @@ test("pagination using searchParams", withServer, async (t, server, got) => {
 		const parameters = new URLSearchParams(request.url.slice(2));
 		const page = Number(parameters.get("page") ?? 0);
 
-		response.end(JSON.stringify({
+		response.end(TSON.stringify<T>({
 			currentUrl: request.url,
 			next: page < 3
 		}));
@@ -649,7 +650,7 @@ test("pagination using extended searchParams", withServer, async (t, server, got
 		const parameters = new URLSearchParams(request.url.slice(2));
 		const page = Number(parameters.get("page") ?? 0);
 
-		response.end(JSON.stringify({
+		response.end(TSON.stringify<T>({
 			currentUrl: request.url,
 			next: page < 3
 		}));
@@ -701,7 +702,7 @@ test("pagination using extended searchParams", withServer, async (t, server, got
 
 test("calls init hooks on pagination", withServer, async (t, server) => {
 	server.get("/", (request, response) => {
-		response.end(JSON.stringify([request.url]));
+		response.end(TSON.stringify<T>([request.url]));
 	});
 
 	const instance = got.extend({
@@ -747,7 +748,7 @@ test("throws if url is not an instance of URL", withServer, async (t, server, go
 
 test("throws when transform does not return an array", withServer, async (t, server) => {
 	server.get("/", (_request, response) => {
-		response.end(JSON.stringify(""));
+		response.end(TSON.stringify<T>(""));
 	});
 
 	await t.throwsAsync(got.paginate.all<string>(server.url));

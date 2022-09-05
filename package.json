@@ -7,18 +7,22 @@
     "build": ""
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@swc/helpers": "~0.3.3",
+    "ccxt": "^1.92.84",
     "ccxws": "^0.47.0",
     "clsx": "^1.1.1",
     "concurrently": "^7.1.0",
     "env-cmd": "^10.1.0",
+    "g": "^2.0.1",
     "ioredis": "^5.2.3",
-    "redis": "^4.3.0",
     "JSON": "^1.0.0",
+    "pnpm": "^7.9.5",
+    "redis": "^4.3.0",
+    "simdjson": "0.9.2",
     "slow-json-stringify": "^2.0.1",
     "tslib": "^2.3.0",
-    "ccxt": "^1.92.84",
-    "simdjson": "0.9.2"
+    "typescript-json": "^3.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",

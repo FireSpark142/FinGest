@@ -1,3 +1,5 @@
+import TSON from "typescript-json";
+
 const assert = require("assert");
 const socketClusterServer = require("socketcluster-server");
 const AGAction = require("socketcluster-server/action");
@@ -483,7 +485,7 @@ describe("Integration tests", function() {
       await client.authenticate(signedAuthToken);
 
       assert.equal(client.authState, "authenticated");
-      assert.equal(JSON.stringify(authStateChanges), JSON.stringify(expectedAuthStateChanges));
+      assert.equal(TSON.stringify<T>(authStateChanges), TSON.stringify<T>(expectedAuthStateChanges));
       client.closeListener("authStateChange");
     });
 
@@ -525,7 +527,7 @@ describe("Integration tests", function() {
       await client.deauthenticate();
       assert.equal(client.authState, "unauthenticated");
 
-      assert.equal(JSON.stringify(authStateChanges), JSON.stringify(expectedAuthStateChanges));
+      assert.equal(TSON.stringify<T>(authStateChanges), TSON.stringify<T>(expectedAuthStateChanges));
     });
 
     it("Should go through the correct sequence of authentication state changes when dealing with disconnections; part 3", async function() {
@@ -558,7 +560,7 @@ describe("Integration tests", function() {
         assert.notEqual(err, null);
         assert.equal(err.name, "AuthTokenInvalidError");
         assert.equal(client.authState, "unauthenticated");
-        assert.equal(JSON.stringify(authStateChanges), JSON.stringify(expectedAuthStateChanges));
+        assert.equal(TSON.stringify<T>(authStateChanges), TSON.stringify<T>(expectedAuthStateChanges));
       }
     });
 
@@ -609,8 +611,8 @@ describe("Integration tests", function() {
 
       assert.equal(client.authState, "authenticated");
       assert.equal(client.authToken.username, "kate");
-      assert.equal(JSON.stringify(authStateChanges), JSON.stringify(expectedAuthStateChanges));
-      assert.equal(JSON.stringify(authTokenChanges), JSON.stringify(expectedAuthTokenChanges));
+      assert.equal(TSON.stringify<T>(authStateChanges), TSON.stringify<T>(expectedAuthStateChanges));
+      assert.equal(TSON.stringify<T>(authTokenChanges), TSON.stringify<T>(expectedAuthTokenChanges));
     });
 
     it("Should wait for socket to be authenticated before subscribing to waitForAuth channel", async function() {
@@ -715,7 +717,7 @@ describe("Integration tests", function() {
 
       await wait(1000);
       client.closeListener("authStateChange");
-      assert.equal(JSON.stringify(authStateChanges), JSON.stringify(expectedAuthStateChanges));
+      assert.equal(TSON.stringify<T>(authStateChanges), TSON.stringify<T>(expectedAuthStateChanges));
     });
 
     it("Should trigger the close event if the socket disconnects in the middle of the handshake phase", async function() {
@@ -865,7 +867,7 @@ describe("Integration tests", function() {
       assert.equal(receivedMessages.length, 3);
       assert.equal(receivedMessages[0], "hello");
       assert.equal(receivedMessages[1], "world");
-      assert.equal(JSON.stringify(receivedMessages[2]), JSON.stringify({ abc: 123 }));
+      assert.equal(TSON.stringify<T>(receivedMessages[2]), TSON.stringify<T>({ abc: 123 }));
     });
 
     it("Should receive invoked publish messages if subscribed to channel", async function() {
@@ -882,7 +884,7 @@ describe("Integration tests", function() {
         await publisherClient.transmitPublish("bar", "world");
         // assert.equal(lastServerMessage, 'world');
         await publisherClient.transmitPublish("bar", { def: 123 });
-        // assert.equal(JSON.stringify(clientReceivedMessages[2]), JSON.stringify({def: 123}));
+        // assert.equal(TSON.stringify<T>(clientReceivedMessages[2]), TSON.stringify<T>({def: 123}));
         await wait(10);
         channel.close();
       })();
@@ -896,7 +898,7 @@ describe("Integration tests", function() {
       assert.equal(clientReceivedMessages.length, 3);
       assert.equal(clientReceivedMessages[0], "hi");
       assert.equal(clientReceivedMessages[1], "world");
-      assert.equal(JSON.stringify(clientReceivedMessages[2]), JSON.stringify({ def: 123 }));
+      assert.equal(TSON.stringify<T>(clientReceivedMessages[2]), TSON.stringify<T>({ def: 123 }));
     });
   });
 
@@ -1110,7 +1112,7 @@ describe("Integration tests", function() {
       await wait(1000);
 
       let expectedEventList = ["connect", "disconnect", "close", "connecting", "connect"];
-      assert.equal(JSON.stringify(eventList), JSON.stringify(expectedEventList));
+      assert.equal(TSON.stringify<T>(eventList), TSON.stringify<T>(expectedEventList));
       assert.equal(fooReceiverTriggered, true);
     });
 
@@ -1226,7 +1228,7 @@ describe("Integration tests", function() {
           reason: "Three"
         }
       ];
-      assert.equal(JSON.stringify(eventList), JSON.stringify(expectedEventList));
+      assert.equal(TSON.stringify<T>(eventList), TSON.stringify<T>(expectedEventList));
     });
   });
 

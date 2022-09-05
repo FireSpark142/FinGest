@@ -26,6 +26,7 @@ import parseLinkHeader from "./parse-link-header.js";
 import type { PlainResponse, Response } from "./response.js";
 import type { RequestError } from "./errors.js";
 import type { Delays } from "./timed-out.js";
+import TSON from "typescript-json";
 
 type Promisable<T> = T | Promise<T>;
 
@@ -190,7 +191,7 @@ export type Hooks = {
 			hooks: {
 				beforeRequest: [
 					options => {
-						options.body = JSON.stringify({payload: 'new'});
+						options.body = TSON.stringify<T>({payload: 'new'});
 						options.headers["content-length"] = options.body.length.toString();
 					}
 				]
@@ -719,7 +720,7 @@ const defaultInternals: Options["_internals"] = {
 	methodRewriting: false,
 	dnsLookupIpVersion: undefined,
 	parseJson: JSON.parse,
-	stringifyJson: JSON.stringify,
+	stringifyJson: TSON.stringify<T>,
 	retry: {
 		limit: 2,
 		methods: [
@@ -1966,7 +1967,7 @@ export default class Options {
 	import got from 'got';
 
 	await got.post('https://example.com', {
-		stringifyJson: object => JSON.stringify(object, (key, value) => {
+		stringifyJson: object => TSON.stringify<T>(object, (key, value) => {
 			if (key.startsWith("_")) {
 				return;
 			}
@@ -1985,7 +1986,7 @@ export default class Options {
 	import got from 'got';
 
 	await got.post('https://example.com', {
-		stringifyJson: object => JSON.stringify(object, (key, value) => {
+		stringifyJson: object => TSON.stringify<T>(object, (key, value) => {
 			if (typeof value === 'number') {
 				return value.toString();
 			}

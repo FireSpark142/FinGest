@@ -13,6 +13,7 @@ import test, { type ExecutionContext } from "ava";
 import type { Handler } from "express";
 import type { Progress } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const checkEvents = (t: ExecutionContext, events: Progress[], bodySize?: number) => {
 	t.true(events.length >= 2);
@@ -158,7 +159,7 @@ test("upload progress - form data", withServer, async (t, server, got) => {
 test("upload progress - json", withServer, async (t, server, got) => {
 	server.post("/", uploadEndpoint);
 
-	const body = JSON.stringify({ key: "value" });
+	const body = TSON.stringify<T>({ key: "value" });
 	const size = Buffer.byteLength(body);
 	const events: Progress[] = [];
 

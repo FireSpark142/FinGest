@@ -10,6 +10,7 @@ import getStream from "get-stream";
 import { pEvent } from "p-event";
 import got, { HTTPError, type ReadError, RequestError } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const IPv6supported = Object.values(os.networkInterfaces()).some(iface => iface?.some(addr => !addr.internal && addr.family === "IPv6"));
@@ -356,7 +357,7 @@ test("JSON request custom stringifier", withServer, async (t, server, got) => {
 	server.post("/", echoBody);
 
 	const payload = { a: "b" };
-	const customStringify = (object: any) => JSON.stringify({ ...object, c: "d" });
+	const customStringify = (object: any) => TSON.stringify<T>({ ...object, c: "d" });
 
 	t.deepEqual((await got.post({
 		stringifyJson: customStringify,

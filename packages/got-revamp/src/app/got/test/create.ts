@@ -13,10 +13,11 @@ import got, {
 	type RequestFunction
 } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const echoHeaders: Handler = (request, response) => {
 	request.resume();
-	response.end(JSON.stringify(request.headers));
+	response.end(TSON.stringify<T>(request.headers));
 };
 
 test("preserves global defaults", withServer, async (t, server, got) => {

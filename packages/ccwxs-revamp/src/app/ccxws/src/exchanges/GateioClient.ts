@@ -13,6 +13,7 @@ import { Level2Update } from "../Level2Update";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
 
 /**
  * Gate.io now supports subscribing to multiple markets from a single socket connection.
@@ -70,7 +71,7 @@ export class GateioClient extends BasicClient {
   protected _sendPing() {
     if (this._wss) {
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "server.ping"
         })
       );
@@ -81,7 +82,7 @@ export class GateioClient extends BasicClient {
     this._debounce("sub-ticker", () => {
       const markets = Array.from(this._tickerSubs.keys()).map(m => m.toUpperCase()); // must be uppercase
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "ticker.subscribe",
           params: markets,
           id: 1
@@ -92,7 +93,7 @@ export class GateioClient extends BasicClient {
 
   protected _sendUnsubTicker() {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "ticker.unsubscribe"
       })
     );
@@ -102,7 +103,7 @@ export class GateioClient extends BasicClient {
     this._debounce("sub-trades", () => {
       const markets = Array.from(this._tradeSubs.keys()).map(m => m.toUpperCase()); // must be uppercase
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "trades.subscribe",
           params: markets,
           id: 1
@@ -113,7 +114,7 @@ export class GateioClient extends BasicClient {
 
   protected _sendUnsubTrades() {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "trades.unsubscribe"
       })
     );
@@ -123,7 +124,7 @@ export class GateioClient extends BasicClient {
     this._debounce("sub-l2updates", () => {
       const markets = Array.from(this._level2UpdateSubs.keys()).map(m => m.toUpperCase()); // must be uppercase
       this._wss.send(
-        JSON.stringify({
+        TSON.stringify<T>({
           method: "depth.subscribe",
           params: markets.map(m => [m, 30, "0"]),
           id: 1
@@ -134,7 +135,7 @@ export class GateioClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates() {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "depth.unsubscribe"
       })
     );

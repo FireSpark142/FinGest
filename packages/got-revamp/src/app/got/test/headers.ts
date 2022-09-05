@@ -9,12 +9,13 @@ import { FormDataEncoder } from "form-data-encoder";
 import { FormData as FormDataNode } from "formdata-node";
 import got, { type Headers } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const supportsBrotli = typeof (process.versions as any).brotli === "string";
 
 const echoHeaders: Handler = (request, response) => {
 	request.resume();
-	response.end(JSON.stringify(request.headers));
+	response.end(TSON.stringify<T>(request.headers));
 };
 
 test("`user-agent`", withServer, async (t, server, got) => {

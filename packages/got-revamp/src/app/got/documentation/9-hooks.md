@@ -131,7 +131,7 @@ const response = await got.post(
 		hooks: {
 			beforeRequest: [
 				options => {
-					options.body = JSON.stringify({payload: 'new'});
+					options.body = TSON.stringify<T>({payload: 'new'});
 					options.headers['content-length'] = options.body.length.toString();
 				}
 			]

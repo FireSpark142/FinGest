@@ -3,6 +3,7 @@ import { redisServer, redisStream } from '@finjest/ingest';
 import Redis from 'ioredis';
 import { exchangeIDMap } from '@finjest/ingest';
 import * as Util from 'util';
+import TSON from "typescript-json";
 
 const globalAny: any = global;
 const log = (globalAny.log = (...l: any) => console.log(...l));
@@ -291,7 +292,7 @@ export const startStreams = async function () {
     log('old request', oldRequest);
     oldRequest = JSON.parse(oldRequest[1]);
     //log("old request", oldRequest);
-    await redis.rpush('dataRequest', JSON.stringify(oldRequest));
+    await redis.rpush('dataRequest', TSON.stringify<T>(oldRequest));
     log('dataRequest llen', await redis.llen('dataRequest'));
   }
   let looping = true;
@@ -302,7 +303,7 @@ export const startStreams = async function () {
     log(request);
     request = JSON.parse(request[1]);
     log(request['exchange']);
-    await redis.rpush('dataStreaming', JSON.stringify(request));
+    await redis.rpush('dataStreaming', TSON.stringify<T>(request));
     log('------->>>>', await redis.llen('dataStreaming'));
 
     var marketMap = exchangeMarketMap.get(request['exchange']);

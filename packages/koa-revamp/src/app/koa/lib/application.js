@@ -1,3 +1,4 @@
+import TSON from "typescript-json";
 "use strict";
 
 /**
@@ -268,7 +269,7 @@ function respond(ctx) {
   if (body instanceof Stream) return body.pipe(res);
 
   // body: json
-  body = JSON.stringify(body);
+  body = TSON.stringify<T>(body);
   if (!res.headersSent) {
     ctx.length = Buffer.byteLength(body);
   }

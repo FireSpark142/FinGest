@@ -14,6 +14,7 @@ import { Level2Update } from "../Level2Update";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
 
 export type PoloniexClientOptions = ClientOptions & {
   autoloadSymbolMaps?: boolean;
@@ -81,7 +82,7 @@ export class PoloniexClient extends BasicClient {
     if (this._subbedToTickers) return; // send for first request
     this._subbedToTickers = true;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         command: "subscribe",
         channel: this.TICKERS_ID
       })
@@ -92,7 +93,7 @@ export class PoloniexClient extends BasicClient {
     if (this._tickerSubs.size) return; // send when no more
     this._subbedToTickers = false;
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         command: "unsubscribe",
         channel: this.TICKERS_ID
       })
@@ -121,7 +122,7 @@ export class PoloniexClient extends BasicClient {
     if (this._subCount[remote_id] > 1) return;
 
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         command: "subscribe",
         channel: remote_id
       })
@@ -135,7 +136,7 @@ export class PoloniexClient extends BasicClient {
     if (this._subCount[remote_id]) return;
 
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         command: "unsubscribe",
         channel: remote_id
       })

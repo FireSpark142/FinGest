@@ -15,6 +15,7 @@ import * as https from "../Https";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Trade } from "../Trade";
 import { Level2Update } from "../Level2Update";
+import TSON from "typescript-json";
 
 /**
  * BistampClient v2 no longer uses Pusher. We can leverage the
@@ -50,7 +51,7 @@ export class BitstampClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "bts:subscribe",
         data: {
           channel: `live_trades_${remote_id}`
@@ -61,7 +62,7 @@ export class BitstampClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "bts:unsubscribe",
         data: {
           channel: `live_trades_${remote_id}`
@@ -72,7 +73,7 @@ export class BitstampClient extends BasicClient {
 
   protected _sendSubLevel2Snapshots(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "bts:subscribe",
         data: {
           channel: `order_book_${remote_id}`
@@ -83,7 +84,7 @@ export class BitstampClient extends BasicClient {
 
   protected _sendUnsubLevel2Snapshots(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "bts:unsubscribe",
         data: {
           channel: `order_book_${remote_id}`
@@ -96,7 +97,7 @@ export class BitstampClient extends BasicClient {
     if (this.requestSnapshot)
       this._requestLevel2Snapshot(this._level2UpdateSubs.get(remote_id));
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "bts:subscribe",
         data: {
           channel: `diff_order_book_${remote_id}`
@@ -107,7 +108,7 @@ export class BitstampClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "bts:unsubscribe",
         data: {
           channel: `diff_order_book_${remote_id}`

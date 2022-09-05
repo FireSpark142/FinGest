@@ -11,6 +11,7 @@ import { pEvent } from "p-event";
 import got, { HTTPError, TimeoutError } from "../source/index.js";
 import type Request from "../source/core/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const retryAfterOn413 = 2;
 const socketTimeout = 300;
@@ -586,7 +587,7 @@ test("reuses request options on retry", withServer, async (t, server, got) => {
 			return;
 		}
 
-		response.end(JSON.stringify(request.headers));
+		response.end(TSON.stringify<T>(request.headers));
 	});
 
 	const { body, retryCount } = await got("", { timeout: { request: 1000 }, responseType: "json" });
@@ -607,7 +608,7 @@ test("respects backoffLimit", withServer, async (t, server, got) => {
 		timestamp = now;
 
 		if (count === 3) {
-			response.end(JSON.stringify(data));
+			response.end(TSON.stringify<T>(data));
 		} else {
 			response.statusCode = 408;
 			response.end();

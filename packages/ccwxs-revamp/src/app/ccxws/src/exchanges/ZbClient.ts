@@ -10,6 +10,7 @@ import { Level2Snapshot } from "../Level2Snapshots";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
 
 export class ZbClient extends BasicClient {
   public remoteIdMap: Map<string, string>;
@@ -34,7 +35,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "addChannel",
         channel: `${wss_remote_id}_ticker`
       })
@@ -45,7 +46,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "removeChannel",
         channel: `${wss_remote_id}_ticker`
       })
@@ -56,7 +57,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "addChannel",
         channel: `${wss_remote_id}_trades`
       })
@@ -67,7 +68,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "removeChannel",
         channel: `${wss_remote_id}_trades`
       })
@@ -78,7 +79,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "addChannel",
         channel: `${wss_remote_id}_depth`
       })
@@ -89,7 +90,7 @@ export class ZbClient extends BasicClient {
     const wss_remote_id = remote_id.replace(/_/, "");
     this.remoteIdMap.set(wss_remote_id, remote_id);
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         event: "removeChannel",
         channel: `${wss_remote_id}_depth`
       })

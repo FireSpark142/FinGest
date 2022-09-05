@@ -11,6 +11,7 @@ import CacheableLookup from "cacheable-lookup";
 import delay from "delay";
 import got, { CacheError, type Response } from "../source/index.js";
 import withServer from "./helpers/with-server.js";
+import TSON from "typescript-json";
 
 const cacheEndpoint: Handler = (_request, response) => {
 	response.setHeader("Cache-Control", "public, max-age=60");
@@ -225,7 +226,7 @@ test("can disable cache by extending the instance", withServer, async (t, server
 test("does not break POST requests", withServer, async (t, server, got) => {
 	server.post("/", async (request, response) => {
 		request.resume();
-		response.end(JSON.stringify(request.headers));
+		response.end(TSON.stringify<T>(request.headers));
 	});
 
 	const headers = await got.post("", {
@@ -239,7 +240,7 @@ test("does not break POST requests", withServer, async (t, server, got) => {
 test("decompresses cached responses", withServer, async (t, server, got) => {
 	const etag = "foobar";
 
-	const payload = JSON.stringify({ foo: "bar" });
+	const payload = TSON.stringify<T>({ foo: "bar" });
 	const compressed = await promisify(gzip)(payload);
 
 	server.get("/", (request, response) => {
@@ -383,7 +384,7 @@ test("http-cache-semantics typings", t => {
 
 test("allows internal modifications", async t => {
 	nock("http://example.com").get("/test").reply(401);
-	nock("http://example.com").get("/test").reply(200, JSON.stringify({
+	nock("http://example.com").get("/test").reply(200, TSON.stringify<T>({
 		wat: ["123"]
 	}));
 
@@ -412,7 +413,7 @@ test("response.complete is true when using keepalive agent", withServer, async (
 
 	const etag = "foobar";
 
-	const payload = JSON.stringify({ foo: "bar" });
+	const payload = TSON.stringify<T>({ foo: "bar" });
 	const compressed = await promisify(gzip)(payload);
 
 	server.get("/", (request, response) => {

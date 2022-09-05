@@ -11,6 +11,7 @@ import { Level2Snapshot } from "../Level2Snapshots";
 import { NotImplementedFn } from "../NotImplementedFn";
 import { Ticker } from "../Ticker";
 import { Trade } from "../Trade";
+import TSON from "typescript-json";
 
 export class UpbitClient extends BasicClient {
   public debouceTimeoutHandles: Map<string, NodeJS.Timeout>;
@@ -40,7 +41,7 @@ export class UpbitClient extends BasicClient {
       if (!this._wss) return;
       const codes = Array.from(this._tickerSubs.keys());
       this._wss.send(
-        JSON.stringify([{ ticket: "tickers" }, { type: "ticker", codes: codes }])
+        TSON.stringify<T>([{ ticket: "tickers" }, { type: "ticker", codes: codes }])
       );
     });
   }
@@ -50,7 +51,7 @@ export class UpbitClient extends BasicClient {
       if (!this._wss) return;
       const codes = Array.from(this._tickerSubs.keys());
       this._wss.send(
-        JSON.stringify([{ ticket: "tickers" }, { type: "ticker", codes: codes }])
+        TSON.stringify<T>([{ ticket: "tickers" }, { type: "ticker", codes: codes }])
       );
     });
   }
@@ -59,7 +60,7 @@ export class UpbitClient extends BasicClient {
     this._debounce("sub-trades", () => {
       if (!this._wss) return;
       const codes = Array.from(this._tradeSubs.keys());
-      this._wss.send(JSON.stringify([{ ticket: "trades" }, { type: "trade", codes: codes }]));
+      this._wss.send(TSON.stringify<T>([{ ticket: "trades" }, { type: "trade", codes: codes }]));
     });
   }
 
@@ -67,7 +68,7 @@ export class UpbitClient extends BasicClient {
     this._debounce("unsub-trades", () => {
       if (!this._wss) return;
       const codes = Array.from(this._tradeSubs.keys());
-      this._wss.send(JSON.stringify([{ ticket: "trades" }, { type: "trade", codes: codes }]));
+      this._wss.send(TSON.stringify<T>([{ ticket: "trades" }, { type: "trade", codes: codes }]));
     });
   }
 
@@ -76,7 +77,7 @@ export class UpbitClient extends BasicClient {
       if (!this._wss) return;
       const codes = Array.from(this._level2SnapshotSubs.keys());
       this._wss.send(
-        JSON.stringify([{ ticket: "quotation" }, { type: "orderbook", codes: codes }])
+        TSON.stringify<T>([{ ticket: "quotation" }, { type: "orderbook", codes: codes }])
       );
     });
   }
@@ -86,7 +87,7 @@ export class UpbitClient extends BasicClient {
       if (!this._wss) return;
       const codes = Array.from(this._level2SnapshotSubs.keys());
       this._wss.send(
-        JSON.stringify([{ ticket: "quotation" }, { type: "orderbook", codes: codes }])
+        TSON.stringify<T>([{ ticket: "quotation" }, { type: "orderbook", codes: codes }])
       );
     });
   }

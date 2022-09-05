@@ -16,6 +16,8 @@ import { Level2Snapshot } from "../Level2Snapshots";
 import { Trade } from "../Trade";
 import moment from "moment";
 import { Ticker } from "../Ticker";
+import TSON from "typescript-json";
+
 
 export class BitflyerClient extends BasicClient {
   public requestSnapshot: boolean;
@@ -47,7 +49,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendSubTicker(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "subscribe",
         params: {
           channel: `lightning_ticker_${remote_id}`
@@ -58,7 +60,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendUnsubTicker(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "unsubscribe",
         params: {
           channel: `lightning_ticker_${remote_id}`
@@ -69,7 +71,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendSubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "subscribe",
         params: {
           channel: `lightning_executions_${remote_id}`
@@ -83,7 +85,7 @@ export class BitflyerClient extends BasicClient {
     if (this.requestSnapshot)
       this._requestLevel2Snapshot(this._level2UpdateSubs.get(remote_id));
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "subscribe",
         params: {
           channel: `lightning_board_${remote_id}`
@@ -94,7 +96,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendUnsubTrades(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "unsubscribe",
         params: {
           channel: `lightning_executions_${remote_id}`
@@ -105,7 +107,7 @@ export class BitflyerClient extends BasicClient {
 
   protected _sendUnsubLevel2Updates(remote_id) {
     this._wss.send(
-      JSON.stringify({
+      TSON.stringify<T>({
         method: "unsubscribe",
         params: {
           channel: `lightning_board_${remote_id}`
