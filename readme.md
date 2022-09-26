@@ -64,9 +64,11 @@ Roadmap:
 Document Heavily
 Refactor with following architecture in order:
 
-- slow-json-stringify everything
+- tson-stringify everything
+  - in progress
 - simdjson everything
   - pull the package and make clone, revamp it - use latest simdjson spec
+  - almost done - need to revamp into typescript from js, rest has been updated. Will be publishing soonTM.
 - update got with undici
 - rewrite and update packages as needed in koa-revamp
 - rewrite and update packages as needed in koa-revamp
